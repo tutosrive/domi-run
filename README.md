@@ -14,7 +14,7 @@ npm install
 ```shell
 npm run dev
 ```
-3. Work in your branch...
+5. Work in your branch...
 
 ---
 
