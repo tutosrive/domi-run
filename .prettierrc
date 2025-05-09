@@ -1,4 +1,5 @@
 {
-    "printWidth": 300,
-    "objectWrap": "preserve"
+  "printWidth": 300,
+  "semi": true,
+  "singleQuote": true
 }
