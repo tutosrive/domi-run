@@ -6,7 +6,15 @@ git clone https://github.com/tutosrive/domi-run.git
 ```shell
 git switch add_features_{username}
 ```
-3. Work in your branch...
+3. Install dependencies:
+```shell
+npm install
+```
+4. Try run the project:
+```shell
+npm run dev
+```
+5. Work in your branch...
 
 ---
 
