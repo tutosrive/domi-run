@@ -4,7 +4,7 @@ git clone https://github.com/tutosrive/domi-run.git
 ```
 2. Switch branch
 ```shell
-git switch add_features_{username}
+git switch add_{username}
 ```
 3. Install dependencies:
 ```shell
