@@ -1,12 +1,11 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { Loader } from 'lucide-react';
+import LoaderPointsComponent from './components/LoaderPoints.component';
 import routers from './routers';
-import SigInPage from './pages/SigInPage.tsx';
 
-const Home = lazy(() => import('./pages/Home'));
-const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
+const Home = lazy(() => import('./pages/Home.page.tsx'));
+const DefaultLayout = lazy(() => import('./layout/Default.layout.tsx'));
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,13 +15,16 @@ function App() {
   }, []);
 
   return loading ? (
-    <div className={'container text-center width-100 height-100'}>Loading...</div>
+    <div className={'w-screen h-screen fixed top-1/2'}>
+      <LoaderPointsComponent />
+    </div>
   ) : (
     <>
       <Toaster position="top-right" reverseOrder={false} containerClassName="overflow-auto" />
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route index element={<SigInPage />} />
+          {/*  OUTLET Content */}
+          <Route index element={<Home />} />
           {routers.map((router, index) => {
             const { path, component: Component } = router;
             return (
@@ -30,7 +32,7 @@ function App() {
                 key={index}
                 path={path}
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<LoaderPointsComponent />}>
                     <Component />
                   </Suspense>
                 }
