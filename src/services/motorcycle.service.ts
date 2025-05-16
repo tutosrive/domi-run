@@ -37,7 +37,7 @@ class MotorcycleService {
    * Send data to the backend
    * @param motorcycle - motorcycle The Motorcycle to send to the backend.
    */
-  async post_motorcycle(motorcycle: string): Promise<ReturningService> {
+  async post_motorcycle(motorcycle: Omit<Motorcycle, id>): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers
@@ -65,10 +65,11 @@ class MotorcycleService {
   /**
    * Update Motorcycle data from the backend
    * @param id - Unique identifier to find and remove the motorcycle from the backend.
+   * @param motorcycle - The Motorcycle Object to send.
    */
-  async update_motorcycle(id: number): Promise<ReturningService> {
+  async update_motorcycle(id: number, motorcycle: Omit<Motorcycle, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Motorcycle> = await axios.put<Motorcycle>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Motorcycle> = await axios.put<Motorcycle>(`${this.URL}/${id}`, motorcycle);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

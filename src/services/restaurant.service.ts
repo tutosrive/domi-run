@@ -37,7 +37,7 @@ class RestaurantService {
    * Send data to the backend
    * @param restaurant - The Restaurant to send to the backend.
    */
-  async post_restaurant(restaurant: Restaurant): Promise<ReturningService> {
+  async post_restaurant(restaurant: Omit<Restaurant, id>): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers
@@ -65,10 +65,11 @@ class RestaurantService {
   /**
    * Update Restaurant data from the backend
    * @param id - Unique identifier to find and remove the restaurant from the backend.
+   * @param restaurant - The Restaurant to send to the backend.
    */
-  async update_restaurant(id: number): Promise<ReturningService> {
+  async update_restaurant(id: number, restaurant: Omit<Restaurant, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Restaurant> = await axios.put<Restaurant>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Restaurant> = await axios.put<Restaurant>(`${this.URL}/${id}`, restaurant);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);
