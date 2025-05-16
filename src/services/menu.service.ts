@@ -1,54 +1,67 @@
-import axios from 'axios';
-import Menu from '../models/Menu.model.ts';
-import ReturningService from '../models/ReturningService.model.ts';
+import axios, { type AxiosResponse } from 'axios';
+import Menu from '../models/Menu.model';
+import ReturningService from '../models/ReturningService.model';
 
-const endpoint = 'http://127.0.0.1:5000/menus';
+class MenuService {
+  private readonly endpoint = 'menus';
+  private readonly URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
+  private readonly config_axios;
 
-const MenuService = {
-  async getAll(): Promise<ReturningService> {
+  constructor() {
+    const token = localStorage.getItem('token');
+    this.config_axios = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    };
+  }
+
+  async get_all(): Promise<ReturningService> {
     try {
-      const response = await axios.get(endpoint);
-      return new ReturningService(response.status, response.data);
-    } catch (error) {
-      return new ReturningService(500, undefined, error);
+      const res: AxiosResponse<Menu[]> = await axios.get(this.URL, this.config_axios);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
     }
-  },
+  }
 
-  async getById(id: number): Promise<ReturningService> {
+  async get_by_id(id: number): Promise<ReturningService> {
     try {
-      const response = await axios.get(`${endpoint}/${id}`);
-      return new ReturningService(response.status, response.data);
-    } catch (error) {
-      return new ReturningService(500, undefined, error);
+      const res: AxiosResponse<Menu> = await axios.get(`${this.URL}/${id}`, this.config_axios);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
     }
-  },
+  }
 
-  async create(menu: Omit<Menu, 'id'>): Promise<ReturningService> {
+  async create(data: Omit<Menu, 'id'>): Promise<ReturningService> {
     try {
-      const response = await axios.post(endpoint, menu);
-      return new ReturningService(response.status, response.data);
-    } catch (error) {
-      return new ReturningService(500, undefined, error);
+      const config = { headers: { 'Content-Type': 'application/json', ...this.config_axios.headers } };
+      const res: AxiosResponse<Menu> = await axios.post(this.URL, data, config);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
     }
-  },
+  }
 
-  async update(id: number, menu: Partial<Menu>): Promise<ReturningService> {
+  async update(id: number, data: Omit<Menu, 'id'>): Promise<ReturningService> {
     try {
-      const response = await axios.put(`${endpoint}/${id}`, menu);
-      return new ReturningService(response.status, response.data);
-    } catch (error) {
-      return new ReturningService(500, undefined, error);
+      const res: AxiosResponse<Menu> = await axios.put(`${this.URL}/${id}`, data, this.config_axios);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
     }
-  },
+  }
 
   async delete(id: number): Promise<ReturningService> {
     try {
-      const response = await axios.delete(`${endpoint}/${id}`);
-      return new ReturningService(response.status, { message: 'Deleted successfully' });
-    } catch (error) {
-      return new ReturningService(500, undefined, error);
+      const res: AxiosResponse = await axios.delete(`${this.URL}/${id}`, this.config_axios);
+      return new ReturningService(res.status);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
     }
-  },
-};
+  }
+}
 
-export default MenuService;
+export default new MenuService();
