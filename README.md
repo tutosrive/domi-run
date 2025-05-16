@@ -30,5 +30,5 @@ git commit -m "Your message"
 ```
 3. Push
 ```shell
-git push origin add_features_{username}
+git push origin add_{username}
 ```
