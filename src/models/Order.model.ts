@@ -1,11 +1,11 @@
 class Order {
-  id: number;
-  quantity: number;
-  total_price: number;
-  status: string;
-  motorcycle_id: number;
-  customer_id: number;
-  menu_id: number;
+  id?: number;
+  quantity?: number;
+  total_price?: number;
+  status?: string;
+  motorcycle_id?: number;
+  customer_id?: number;
+  menu_id?: number;
 
   /**
    * Create a new object “Order”
@@ -17,14 +17,15 @@ class Order {
    * @param customer_id - Unique identification of customer
    * @param menu_id - Unique identification of a menu.
    */
-  constructor(id: number, quantity: number, total_price: number, status: string, motorcycle_id: number, customer_id: number, menu_id: number) {
-    this.id = id;
-    this.quantity = quantity;
-    this.total_price = total_price;
-    this.status = status;
-    this.motorcycle_id = motorcycle_id;
-    this.customer_id = customer_id;
-    this.menu_id = menu_id;
+  constructor(id?: number, quantity?: number, total_price?: number, status?: string, motorcycle_id?: number, customer_id?: number, menu_id?: number) {
+    // Set all in a default value if not get from the constructor.
+    this.id = id ?? -1;
+    this.quantity = quantity ?? -1;
+    this.total_price = total_price ?? -1;
+    this.status = status ?? '';
+    this.motorcycle_id = motorcycle_id ?? -1;
+    this.customer_id = customer_id ?? -1;
+    this.menu_id = menu_id ?? -1;
   }
 }
 

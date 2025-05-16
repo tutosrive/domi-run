@@ -1,9 +1,9 @@
 class Motorcycle {
-  id: number;
-  license_plate: string;
-  brand: string;
-  year: string;
-  status: string;
+  id?: number;
+  license_plate?: string;
+  brand?: string;
+  year?: string;
+  status?: string;
 
   /**
    * Create a new object "Motorcycle"
@@ -13,12 +13,13 @@ class Motorcycle {
    * @param year - motorcycle model
    * @param status - Motorcycle availability
    */
-  constructor(id: number, license_plate: string, brand: string, year: string, status: string) {
-    this.id = id;
-    this.license_plate = license_plate;
-    this.brand = brand;
-    this.year = year;
-    this.status = status;
+  constructor(id?: number, license_plate?: string, brand?: string, year?: string, status?: string) {
+    // Set all in a default value if not get from the constructor.
+    this.id = id ?? -1;
+    this.license_plate = license_plate ?? '';
+    this.brand = brand ?? '';
+    this.year = year ?? '';
+    this.status = status ?? '';
   }
 }
 
