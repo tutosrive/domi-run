@@ -9,6 +9,7 @@ class AddressService {
   constructor() {
     this.endpoint = 'addresses';
     this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
+    // Feature: Update to "interceptors"
     this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
   }
 
@@ -37,7 +38,7 @@ class AddressService {
    * Send data to the backend
    * @param address - The Address to send to the backend.
    */
-  async post_address(address: Address): Promise<ReturningService> {
+  async post_address(address: Omit<Address, id>): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers
@@ -65,10 +66,11 @@ class AddressService {
   /**
    * Update Address data from the backend
    * @param id - Unique identifier to find and remove the address from the backend.
+   * @param address - The Address object to send.
    */
-  async update_address(id: number): Promise<ReturningService> {
+  async update_address(id: number, address: Omit<Address, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Address> = await axios.put<Address>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Address> = await axios.put<Address>(`${this.URL}/${id}`, address);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

@@ -37,7 +37,7 @@ class OrderService {
    * Send data to the backend
    * @param order - The Order to send to the backend.
    */
-  async post_order(order: Order): Promise<ReturningService> {
+  async post_order(order: Omit<Order, id>): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers
@@ -65,10 +65,11 @@ class OrderService {
   /**
    * Update Order data from the backend
    * @param id - Unique identifier to find and remove the order from the backend.
+   * @param order - The Order to send to the backend.
    */
-  async update_order(id: number): Promise<ReturningService> {
+  async update_order(id: number, order: Omit<Order, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Order> = await axios.put<Order>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Order> = await axios.put<Order>(`${this.URL}/${id}`, order);
       return new ReturningService(req.status, req.data ?? {});
     } catch (e) {
       return new ReturningService(500, {}, e);
