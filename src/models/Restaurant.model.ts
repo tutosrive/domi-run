@@ -1,9 +1,11 @@
+import Address from './Address.model';
+
 class Restaurant {
-  id: number;
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
+  id?: number;
+  name?: string;
+  address?: Address;
+  phone?: string;
+  email?: string;
 
   /**
    * Create a new object “Restaurant”
@@ -13,12 +15,13 @@ class Restaurant {
    * @param phone - Restaurant contact to orders
    * @param email - Restaurant email contact.
    */
-  constructor(id: number, name: string, address: string, phone: string, email: string) {
-    this.id = id;
-    this.name = name;
-    this.address = address;
-    this.phone = phone;
-    this.email = email;
+  constructor(id?: number, name?: string, address?: Address, phone?: string, email?: string) {
+    // Set all in a default value if not get from the constructor.
+    this.id = id ?? -1;
+    this.name = name ?? '';
+    this.address = address ?? new Address();
+    this.phone = phone ?? '';
+    this.email = email ?? '';
   }
 }
 
