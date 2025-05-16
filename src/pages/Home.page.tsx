@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
 import { Tag } from 'primereact/tag';
-import { ProductService } from '../services/products.service';
 import SigInButtonComponent from '../components/SigIn/SigInButton.component';
 import ListAll from './address/listAll.tsx';
 
@@ -31,6 +30,7 @@ export default function CircularDemo() {
     },
   ];
 
+  // To get quantity severity
   const getSeverity = (product) => {
     switch (product.inventoryStatus) {
       case 'INSTOCK':
@@ -47,9 +47,7 @@ export default function CircularDemo() {
     }
   };
 
-  useEffect(() => {
-    ProductService.getProductsSmall().then((data) => setProducts(data.slice(0, 9)));
-  }, []);
+  useEffect(() => {}, []);
 
   const productTemplate = (product) => {
     return (
