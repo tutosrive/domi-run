@@ -8,11 +8,15 @@ const CreateAddressesPage = lazy(() => import('../pages/address/createAddress.pa
 const SignInPage = lazy(() => import('../pages/SigIn.page'));
 const ProfilePage = lazy(() => import('../pages/Profile.page'));
 const HomePage = lazy(() => import('../pages/Home.page'));
+const Home = lazy(() => import('../pages/Home.page'));
 
 const RestaurantsPage = lazy(() => import('../pages/restaurants/restaurants.page'));
 const UpdateRestaurantPage = lazy(() => import('../pages/restaurants/updateRestaurant.page'));
 const ViewRestaurantPage = lazy(() => import('../pages/restaurants/viewRestaurant.page'));
 const CreateRestaurantPage = lazy(() => import('../pages/restaurants/createRestaurant.page'));
+
+// Fix Via Github Web (I'm quality manager..., i left all correct, that think...)
+const OAuthCallbackPage = lazy(() => import('../pages/OAuthCallbackPage'));
 
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
@@ -31,6 +35,7 @@ const routes_index: Array<object> = [
   { path: '/customers/view/:id', component: HomePage, title: 'View Customer' },
   { path: '/customers/update/:id', component: HomePage, title: 'Update Customer' },
   { path: '/customers/create/', component: HomePage, title: 'Create Customer' },
+  { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
 ];
 
 const routers = [...routes_index];
