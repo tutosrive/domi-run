@@ -23,3 +23,7 @@
   /*display: grid;*/
   /*grid-template-rows: 0.1fr 1fr 0.1fr;*/
 }
+
+.p-ripple.orange-ripple .p-ink{
+  background: #f6a6004d; /* Yellow */
+}
