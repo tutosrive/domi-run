@@ -1,0 +1,7 @@
+.chatBotStyles ul{
+    list-style: square inside;
+}
+
+.chatBotStyles ol{
+    list-style: decimal inside;
+}
