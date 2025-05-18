@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import HeaderComponent from '../components/Header.component';
 import FooterComponent from '../components/Footer.component';
+import ChatbotWidget from '../components/Chatbot/ChatbotWidget';
 
 const DefaultLayout = () => {
   return (
@@ -26,6 +27,7 @@ const DefaultLayout = () => {
             </main>
             {/* <!-- ===== Main Content End ===== --> */}
             <FooterComponent />
+            <ChatbotWidget />
           </div>
           {/* Chat Bot... */}
           {/* <!-- ===== Content Area End ===== --> */}
