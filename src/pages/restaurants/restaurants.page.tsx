@@ -38,7 +38,10 @@ export default function RestaurantsPage() {
 
   return (
     <>
-      <Suspense>
+      <div className={'text-center mb-2'}>
+        <h1>Restaurants</h1>
+      </div>
+      <div className={'flex justify-center'}>
         {restaurants.length > 0 ? (
           <TableDataPrimeComponent
             data={dataTable}
@@ -53,9 +56,11 @@ export default function RestaurantsPage() {
             onRemove={(id) => removeRestaurant(id)}
           />
         ) : (
-          <LoaderPointsComponent />
+          <div className={'w-screen h-screen fixed top-1/2'}>
+            <LoaderPointsComponent />
+          </div>
         )}
-      </Suspense>
+      </div>
     </>
   );
 }

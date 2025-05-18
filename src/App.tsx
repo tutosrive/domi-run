@@ -32,7 +32,13 @@ function App() {
                 key={index}
                 path={path}
                 element={
-                  <Suspense fallback={<LoaderPointsComponent />}>
+                  <Suspense
+                    fallback={
+                      <div className={'w-screen h-screen fixed top-1/2'}>
+                        <LoaderPointsComponent />
+                      </div>
+                    }
+                  >
                     <Component />
                   </Suspense>
                 }

@@ -6,6 +6,7 @@ import 'react-tabulator/lib/styles.css';
 import 'react-tabulator/lib/css/tabulator.min.css';
 import TableDataPrimeComponent, { type DataTableObject } from '../../components/TableDataPrime.component';
 import { useNavigate } from 'react-router-dom';
+import LoaderPointsComponent from '../../components/LoaderPoints.component.tsx';
 
 export default function AddressesPage() {
   const [addresses, setAddresses] = useState([]);
@@ -35,10 +36,18 @@ export default function AddressesPage() {
   };
   return (
     <>
-      <div className={'card'}>
-        <div className={'relative top-0'}></div>
-        <div className={'h-68 w-full'}>{addresses.length > 0 && <TableDataPrimeComponent data={dataTable} navigation={navigators} />}</div>
+      <div className={'text-center mb-2'}>
+        <h1>Addresses</h1>
       </div>
+      {addresses.length > 0 ? (
+        <>
+          <div className={'flex justify-center'}>{addresses.length > 0 && <TableDataPrimeComponent data={dataTable} navigation={navigators} />}</div>
+        </>
+      ) : (
+        <div className={'w-screen h-screen fixed top-1/2'}>
+          <LoaderPointsComponent />
+        </div>
+      )}
     </>
   );
 }
