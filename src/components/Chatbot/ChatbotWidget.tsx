@@ -1,4 +1,5 @@
-import { JSX, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import axios from 'axios';
 import parse from 'html-react-parser';
 
@@ -7,13 +8,25 @@ const questions = ['¿Para qué sirve este sistema?', '¿Dónde puedo registrar 
 const AVATAR_URL = '/chatbot-avatar.png'; // Imagen debe estar en /public
 
 export default function ChatbotWidget() {
-  const [showOptions, setShowOptions] = useState(false);
-  const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [showOptions, setShowOptions] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [chatbotOpen, setChatbotOpen] = useState<boolean>(false);
 
+  // Shortcut to open/close ChatBot
+  useHotkeys(
+    'ctrl+enter',
+    (event) => {
+      event.preventDefault();
+      setChatbotOpen((prev) => !prev);
+      setShowOptions((prev) => !prev);
+    },
+    { enableOnFormTags: ['input', 'textarea'], preventDefault: true, keyup: true },
+    [setChatbotOpen],
+  );
   const askGemini = async (question: string) => {
     setLoading(true);
-    setResponse('');
+    setResponse('Pensando...');
 
     const prompt = `Contexto:
 Eres el chatbot de la página de domicilios Domi Run. Eres colombiano, muy alegre, siempre respetuoso y respondes de forma breve y clara, sin groserías.
@@ -65,24 +78,29 @@ Responde brevemente a la pregunta:
     }
   };
 
+  const optionsJsx = (
+    <div className="bg-blue-100 text-black p-3 rounded shadow-md max-w-xs text-sm">
+      {questions.map((q, idx) => (
+        <button key={idx} onClick={() => askGemini(q)} className="text-sm text-left hover:bg-gray-100 p-2 w-full rounded">
+          {q}
+        </button>
+      ))}
+    </div>
+  );
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end space-y-2">
-      {showOptions && (
-        <div className="bg-blue-100 text-black p-3 rounded shadow-md max-w-xs text-sm">
-          {questions.map((q, idx) => (
-            <button key={idx} onClick={() => askGemini(q)} className="text-sm text-left hover:bg-gray-100 p-2 w-full rounded">
-              {q}
-            </button>
-          ))}
-        </div>
+      {chatbotOpen && (
+        <>
+          {showOptions && optionsJsx}
+
+          {response && <div className="bg-white/30 backdrop-blur-sm text-white p-3 rounded shadow-md max-w-xs max-h-[50vh] overflow-y-scroll text-sm">{loading ? 'Pensando...' : <div>{parse(response)}</div>}</div>}
+        </>
       )}
-
-      {response && <div className="bg-white/30 backdrop-blur-sm text-white p-3 rounded shadow-md max-w-xs max-h-[50vh] overflow-y-scroll text-sm">{loading ? 'Loading...' : <div>{parse(response)}</div>}</div>}
-
       <button
-        onClick={() => {
-          setShowOptions(!showOptions);
-          setResponse('');
+        onClick={(e) => {
+          e.preventDefault();
+          setChatbotOpen((prev) => !prev);
+          setShowOptions((prev) => !prev);
         }}
         className="rounded-full overflow-hidden border-2 border-gray-300 shadow-lg w-14 h-14 mb-6 me-1"
         title="Ayuda"
