@@ -18,6 +18,9 @@
   @tailwind utilities;
 }
 
+h1{
+  font-size:2em;
+}
 
 .body-main{
   /*display: grid;*/
