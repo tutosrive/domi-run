@@ -1,6 +1,7 @@
 import axios, { type AxiosResponse } from 'axios';
 import Restaurant from '../models/Restaurant.model.ts';
-import ReturningService from '../models/ReturningService.model.ts';
+import ReturningService from '../models/ReturningService.model';
+import type Menu from '../models/Menu.model';
 
 class RestaurantService {
   private readonly endpoint: string; // Endpoint to access to restaurants
@@ -21,6 +22,7 @@ class RestaurantService {
       return new ReturningService(500, {}, e);
     }
   }
+
   /**
    * Get data for a specific restaurant
    * @param id - Unique identifier to get data from the backend.
@@ -70,6 +72,15 @@ class RestaurantService {
   async update_restaurant(id: number, restaurant: Omit<Restaurant, id>): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Restaurant> = await axios.put<Restaurant>(`${this.URL}/${id}`, restaurant);
+      return new ReturningService(req.status, req.data || {});
+    } catch (e) {
+      return new ReturningService(500, {}, e);
+    }
+  }
+
+  async get_menus(id: number): Promise<ReturningService> {
+    try {
+      const req: AxiosResponse<Menu[]> = await axios.get<Menu[]>(`${this.URL}/${id}/menus`);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

@@ -2,6 +2,7 @@ import { JSX, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import axios from 'axios';
 import parse from 'html-react-parser';
+import '../../assets/css/chatbot.css';
 
 const questions = ['¿Para qué sirve este sistema?', '¿Dónde puedo registrar un nuevo conductor?', '¿En qué parte puedo realizar un pedido?', '¿Qué hago si hay un problema con una moto?', '¿Cómo veo el historial de pedidos?'];
 
@@ -93,7 +94,7 @@ Responde brevemente a la pregunta:
         <>
           {showOptions && optionsJsx}
 
-          {response && <div className="bg-white/30 backdrop-blur-sm text-white p-3 rounded shadow-md max-w-xs max-h-[50vh] overflow-y-scroll text-sm">{loading ? 'Pensando...' : <div>{parse(response)}</div>}</div>}
+          {response && <div className="bg-white/30 backdrop-blur-sm text-white p-3 rounded shadow-md max-w-xs max-h-[50vh] overflow-y-scroll text-sm chatBotStyles">{loading ? 'Pensando...' : <div>{parse(response)}</div>}</div>}
         </>
       )}
       <button
