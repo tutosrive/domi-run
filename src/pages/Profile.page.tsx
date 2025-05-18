@@ -18,6 +18,7 @@ export default function ProfileContent() {
     if (accounts[0]) {
       // Get profile information when the page loaded
       instance.acquireTokenSilent({ ...loginRequest, account: accounts[0] }).then((response) => {
+        // Feature/Bug: Fix, when logged, page don't update
         callMsGraph(response.accessToken).then((response) => {
           setGraphData(response);
           if (!userSession) {
@@ -27,12 +28,10 @@ export default function ProfileContent() {
           }
         });
       });
-      console.log(graphData);
     }
   }, []);
 
   const logout = () => {
-    console.log('LogOut');
     instance.logoutRedirect();
     sessionStorage.removeItem('user_domi_run');
   };
@@ -40,7 +39,7 @@ export default function ProfileContent() {
   return (
     <>
       <div className={'w-screen h-screen'}>
-        {/* When user is registered */}
+        {/* When a user is registered */}
         <AuthenticatedTemplate>
           {graphData ? (
             //   Profile card
@@ -59,8 +58,8 @@ export default function ProfileContent() {
           )}
         </AuthenticatedTemplate>
         <UnauthenticatedTemplate>
-          {/* When user is not registered */}
-          {__fixed_centered_div(<SigInButtonComponent icon={'pi pi-sigin-in'} classes={''} styles={{ backgroundColor: 'transparent', color: 'white', border: 'none' }} />)}
+          {/* When a user is not registered */}
+          {__fixed_centered_div(<SigInButtonComponent icon={'pi pi-sign-in'} classes={''} styles={{ backgroundColor: 'transparent', color: 'white', border: 'none' }} />)}
         </UnauthenticatedTemplate>
       </div>
       <div>{/* Feature: Get the orders or put a graphic inside... */}</div>

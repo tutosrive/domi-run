@@ -4,7 +4,7 @@ import { type ColumnDefinition, ReactTabulator } from 'react-tabulator';
 import type ReturningService from '../../models/ReturningService.model.ts';
 import { useParams } from 'react-router-dom';
 
-export default function ListOne() {
+export default function ViewAddressPage() {
   const [address, setAddress] = useState([{ id: '', order_id: '', city: '', street: '', state: '', postal_code: '', additional_info: '' }]);
   const { id } = useParams();
 
