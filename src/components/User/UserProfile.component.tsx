@@ -38,7 +38,7 @@ const UserProfileComponent: React.FC<UserProfileProps> = ({ userGraphData, class
             {/* Feature: Add tags */}
             <div className="mt-6 pt-3 flex flex-wrap mx-6 border-t"></div>
             <div className={classesLogoutContainer ?? ''}>
-              <LogoutButtonComponent />
+              <LogoutButtonComponent handleLogout={handleLogout} />
             </div>
           </div>
         </>

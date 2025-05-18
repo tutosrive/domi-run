@@ -3,6 +3,8 @@ import { setClose } from '../slice/sidebar.slice.ts';
 import { Sidebar } from 'primereact/sidebar';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CategoryProductsMenu from './products/categoryMenu.component.tsx';
+import { Ripple } from 'primereact/ripple';
 
 function SidebarComponent() {
   // Get sidebarStatus (via Reactive)
@@ -12,8 +14,24 @@ function SidebarComponent() {
   return (
     <>
       <Sidebar visible={sidebarState} onHide={() => dispatchEvent(setClose())}>
-        <Link className={'btn w-full'} to={'/profile'} onClick={() => dispatchEvent(setClose())}>
+        {/* Navigate to the 'Profile' page */}
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/profile'} onClick={() => dispatchEvent(setClose())}>
           <i className={'pi pi-user'} /> Profile
+          <Ripple />
+        </Link>
+        {/* Navigate to the 'Restaurants' page */}
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/restaurants/list'} onClick={() => dispatchEvent(setClose())}>
+          <i className={'pi pi-user'} /> Restaurants
+          <Ripple />
+        </Link>
+        {/* Navigate to the 'Restaurants' page, view categories */}
+        <div className={'mb-2 w-full'} onClick={() => dispatchEvent(setClose())}>
+          <CategoryProductsMenu />
+        </div>
+        {/* Navigate to the 'Restaurants' page */}
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/customers/list'} onClick={() => dispatchEvent(setClose())}>
+          <i className={'pi pi-users'} /> Customers
+          <Ripple />
         </Link>
       </Sidebar>
     </>
