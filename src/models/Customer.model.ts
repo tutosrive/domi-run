@@ -1,8 +1,8 @@
 class Customer {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
+  id?: number;
+  name?: string;
+  email?: string;
+  phone?: string;
 
   /**
    * Create a new object "Customer"
@@ -11,11 +11,11 @@ class Customer {
    * @param email - Customer's email address
    * @param phone - Customer's phone number
    */
-  constructor(id: number, name: string, email: string, phone: string) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
+  constructor(id?: number, name?: string, email?: string, phone?: string) {
+    this.id = id ?? -1;
+    this.name = name ?? '';
+    this.email = email ?? '';
+    this.phone = phone ?? '';
   }
 }
 
