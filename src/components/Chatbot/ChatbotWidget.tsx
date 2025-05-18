@@ -1,13 +1,8 @@
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import axios from 'axios';
+import parse from 'html-react-parser';
 
-const questions = [
-  '¿Para qué sirve este sistema?',
-  '¿Dónde puedo registrar un nuevo conductor?',
-  '¿En qué parte puedo realizar un pedido?',
-  '¿Qué hago si hay un problema con una moto?',
-  '¿Cómo veo el historial de pedidos?',
-];
+const questions = ['¿Para qué sirve este sistema?', '¿Dónde puedo registrar un nuevo conductor?', '¿En qué parte puedo realizar un pedido?', '¿Qué hago si hay un problema con una moto?', '¿Cómo veo el historial de pedidos?'];
 
 const AVATAR_URL = '/chatbot-avatar.png'; // Imagen debe estar en /public
 
@@ -19,7 +14,35 @@ export default function ChatbotWidget() {
   const askGemini = async (question: string) => {
     setLoading(true);
     setResponse('');
-    const prompt = `Responde brevemente a la siguiente pregunta para un sistema de gestión de domicilios, debes saber que tenemos una sidebar donde esta restaurantes que redirige a todos los restaurantes existentes, en cada uno de estos se puede visualizar el menu, y los pedidos se hacen escogiendo los productos de dicho menu de dicho restaurante y luego llendo al carrito en la parte superior derecha y se le da en el boton de ordenar, el la misma sidebar hay una seccion que dice conductores, donde se prodan registrar poniendo sus datos(IMPORTANTE: recuerda que side bar es la barra lateral que aparece tocando las tres lineas de la parte superior izquierda), en caso de problemas u incovenientes de la moto se debe ir al apartado de conductores, escoger el conductor, despues la moto, y por ultimo hacer informe del error,y el historial de pedidos se puede ver en address tambien en la side bar, y en general es una aplicacion para gestionar los domicilios donde contamos con registro de restaurantes, conductores, nuevos usuarios, graficas interactivas de multiples datos de la pagina y un mapa interactivo para que sepa donde va su pedido : ${question}`;
+
+    const prompt = `Contexto:
+Eres el chatbot de la página de domicilios Domi Run. Eres colombiano, muy alegre, siempre respetuoso y respondes de forma breve y clara, sin groserías.
+
+Contexto técnico:
+La web está escrita en React 18.2.0 y usamos html-react-parser para convertir texto HTML en componentes JSX.
+
+Formato de respuesta:
+- Solo HTML puro, nada de markdown, código, texto plano o caracteres de escape.
+- Prohibido cualquier bloque de código o comillas especiales.
+- Para enfatizar el nombre de la web “Domi Run”, úsalo dentro de una etiqueta fuerte.
+- Para párrafos, usa la etiqueta de párrafo.
+- Para listas desordenadas, usa la etiqueta de lista desordenada con elementos de lista.
+- Para listas ordenadas, usa la etiqueta de lista ordenada con elementos de lista.
+- No incluyas etiquetas de documento ni comentarios.
+- **Incluye al menos un emoji de comida en cada frase** (por ejemplo 🍕, 🍔, 🌮, 🍣) para que la respuesta sea más amena.
+
+Descripción de la app (solo para contexto, no va en la respuesta):
+– La barra lateral (las tres rayas en la esquina superior izquierda) tiene:
+  • Restaurantes, que muestra todos los restaurantes y sus menús.
+  • Conductores, para registrar y luego reportar problemas con motos.
+  • Address, para ver el historial de pedidos.
+– El usuario elige productos del menú, va al carrito en la esquina superior derecha y pulsa Ordenar.
+– Extras: registro de usuarios, gráficas interactivas y mapa de seguimiento.
+
+Instrucción final:
+Responde brevemente a la pregunta:
+> ${question}
+`;
 
     try {
       const { data } = await axios.post(
@@ -29,14 +52,14 @@ export default function ChatbotWidget() {
         },
         {
           headers: { 'Content-Type': 'application/json' },
-        }
+        },
       );
 
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sin respuesta';
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Not response, try again';
       setResponse(text);
     } catch (error) {
-      console.error('Error al conectar con Gemini:', error);
-      setResponse('Error al conectar con Gemini');
+      console.error('Error to connect Gemini:', error);
+      setResponse('Error to connect Gemini');
     } finally {
       setLoading(false);
     }
@@ -47,26 +70,21 @@ export default function ChatbotWidget() {
       {showOptions && (
         <div className="bg-blue-100 text-black p-3 rounded shadow-md max-w-xs text-sm">
           {questions.map((q, idx) => (
-            <button
-              key={idx}
-              onClick={() => askGemini(q)}
-              className="text-sm text-left hover:bg-gray-100 p-2 w-full rounded"
-            >
+            <button key={idx} onClick={() => askGemini(q)} className="text-sm text-left hover:bg-gray-100 p-2 w-full rounded">
               {q}
             </button>
           ))}
         </div>
       )}
 
-      {response && (
-        <div className="bg-blue-100 text-black p-3 rounded shadow-md max-w-xs text-sm">
-          {loading ? 'Cargando...' : response}
-        </div>
-      )}
+      {response && <div className="bg-white/30 backdrop-blur-sm text-white p-3 rounded shadow-md max-w-xs max-h-[50vh] overflow-y-scroll text-sm">{loading ? 'Loading...' : <div>{parse(response)}</div>}</div>}
 
       <button
-        onClick={() => {setShowOptions(!showOptions);setResponse('');}}
-        className="rounded-full overflow-hidden border-2 border-gray-300 shadow-lg w-14 h-14"
+        onClick={() => {
+          setShowOptions(!showOptions);
+          setResponse('');
+        }}
+        className="rounded-full overflow-hidden border-2 border-gray-300 shadow-lg w-14 h-14 mb-6 me-1"
         title="Ayuda"
       >
         <img src={AVATAR_URL} alt="chatbot" className="w-full h-full object-cover" />
