@@ -33,6 +33,11 @@ function SidebarComponent() {
           <i className={'pi pi-users'} /> Customers
           <Ripple />
         </Link>
+        {/* Navigate to the 'Statistics' page */}
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/statistics'} onClick={() => dispatchEvent(setClose())}>
+          <i className={'pi pi-chart-bar'} /> Statistics
+          <Ripple />
+        </Link>
       </Sidebar>
     </>
   );

@@ -38,6 +38,7 @@ export interface TablePrimeProps {
   };
   onCreate?: () => void;
   onRemove?: (id: string | number) => Promise<any>;
+  globalFilter?: string[];
 }
 
 /**
@@ -54,6 +55,7 @@ export interface TablePrimeState {
   dialogRemoveVisible: boolean;
   rowToRemove: Record<string, any> | null;
   removeTemplate: JSX.Element | null;
+  props: TablePrimeProps;
 }
 
 export class TablePrime extends Component<TablePrimeProps, TablePrimeState> {
@@ -67,6 +69,7 @@ export class TablePrime extends Component<TablePrimeProps, TablePrimeState> {
       dialogRemoveVisible: false,
       rowToRemove: null,
       removeTemplate: null,
+      props: props,
     };
   }
 
@@ -173,7 +176,7 @@ export class TablePrime extends Component<TablePrimeProps, TablePrimeState> {
     if (!records?.length) return null;
     let keys = Object.keys(records[0]);
     if (keys.includes('id')) keys = ['id', ...keys.filter((k) => k !== 'id')];
-    return keys.map((key) => <Column key={key} field={key} header={key.charAt(0).toUpperCase() + key.slice(1)} sortable={!!sortable} />);
+    return keys.map((key) => <Column key={key} field={key} header={key.charAt(0).toUpperCase() + key.slice(1)} sortable={sortable ?? true} />);
   }
 
   /**
@@ -222,6 +225,7 @@ export class TablePrime extends Component<TablePrimeProps, TablePrimeState> {
           scrollHeight={data.scrollHeight ?? '50vh'}
           paginator
           rows={10}
+          stripedRows
           rowsPerPageOptions={[5, 10, 25, 50]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="{first}/{last} | Total: {totalRecords}"
