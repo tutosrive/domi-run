@@ -6,9 +6,11 @@ class OrderService {
   private readonly endpoint: string; // Endpoint to access to orders
   private readonly URL: string; // Complete URL (URL_API + endpoint)
   private readonly config_axios; // Config to send it into axios requests
+  private readonly URL_API: string;
   constructor() {
     this.endpoint = 'orders';
-    this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
+    this.URL_API = import.meta.env.VITE_URL_API;
+    this.URL = `${this.URL_API}/${this.endpoint}`;
     this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
   }
 
@@ -70,6 +72,14 @@ class OrderService {
   async update_order(id: number, order: Omit<Order, id>): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Order> = await axios.put<Order>(`${this.URL}/${id}`, order);
+      return new ReturningService(req.status, req.data ?? {});
+    } catch (e) {
+      return new ReturningService(500, {}, e);
+    }
+  }
+  async get_order_month_most_wanted(): Promise<ReturningService> {
+    try {
+      const req: AxiosResponse<Order> = await axios.get<Order>(`${this.URL_API}/stats/${this.endpoint}/months`, this.config_axios);
       return new ReturningService(req.status, req.data ?? {});
     } catch (e) {
       return new ReturningService(500, {}, e);

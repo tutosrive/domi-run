@@ -30,3 +30,18 @@ h1{
 .p-ripple.orange-ripple .p-ink{
   background: #f6a6004d; /* Yellow */
 }
+
+.apexcharts-menu {
+  background-color: transparent !important; /* Fondo oscuro */
+  border-radius: 6px;
+  padding: 4px;
+  backdrop-filter: blur(19px);
+}
+
+.apexcharts-menu > .apexcharts-menu-item:hover{
+  background-color: rgba(255, 255, 255, 0.29) !important;
+  color: black;
+}
+.apexcharts-toolbar svg {
+  fill: white !important; /* Iconos blancos */
+}
