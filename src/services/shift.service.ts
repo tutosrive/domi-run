@@ -18,13 +18,14 @@ class ShiftService {
   }
 
   async get_all(): Promise<ReturningService> {
-    try {
-      const res: AxiosResponse<Shift[]> = await axios.get(this.URL, this.config_axios);
-      return new ReturningService(res.status, res.data);
-    } catch (e) {
-      return new ReturningService(500, {}, e);
-    }
+  try {
+    const res: AxiosResponse<Shift[]> = await axios.get(this.URL, this.config_axios);
+    return new ReturningService(res.status, res.data || []);
+  } catch (e) {
+    console.error('Error al obtener shifts:', e);
+    return new ReturningService(500, [], e);
   }
+}
 
   async get_by_id(id: number): Promise<ReturningService> {
     try {
