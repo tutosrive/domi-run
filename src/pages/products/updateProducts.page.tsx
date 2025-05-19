@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import productService from '../../services/product.service';
 import Product from '../../models/Product.model';
@@ -35,10 +36,10 @@ export default function UpdateProductPage() {
     if (!id) return;
     const res = await productService.update_product(Number(id), form);
     if (res.status === 200) {
-      alert('Producto actualizado');
+      Swal.fire({ title: 'Success', text: 'Customer updated successfully', icon: 'success' });
       navigate('/products/category/all');
     } else {
-      alert('Error al actualizar el producto');
+      Swal.fire({ title: 'Error', text: 'Failed to update restaurant', icon: 'error' });
     }
   };
 

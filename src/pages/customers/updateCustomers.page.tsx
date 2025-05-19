@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import customerService from '../../services/customer.service';
 import Customer from '../../models/Customer.model';
@@ -19,21 +20,22 @@ export default function UpdateCustomerPage() {
   }, [id]);
 
   const validationSchema = Yup.object({
-    name: Yup.string()
-      .required('El nombre es obligatorio')
-      .min(3, 'Debe tener al menos 3 caracteres'),
-    email: Yup.string()
-      .email('Correo inválido')
-      .required('El correo es obligatorio'),
-    phone: Yup.string()
-      .required('El teléfono es obligatorio')
-      .matches(/^\d{10}$/, 'Debe tener exactamente 10 dígitos numéricos'),
-  });
+      name: Yup.string().min(3, 'Minimo 3 caracteres').required('Nombre requerido'),
+      email: Yup.string().email('Correo inválido').required('Correo requerido'),
+      phone: Yup.string()
+        .matches(/^[0-9]+$/, 'Solo números')
+        .min(7, 'Mínimo 7 dígitos')
+        .required('Teléfono requerido'),
+    });
 
   const handleSubmit = async (values: Customer) => {
-    const res = await customerService.post_customer(values);
+    const { id, ...customerData } = values;
+    const res = await customerService.update_customer(Number(id), customerData);
     if (res.status === 200) {
+      Swal.fire({ title: 'Success', text: 'Customer updated successfully', icon: 'success' });
       navigate('/customers/list');
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to update restaurant', icon: 'error' });
     }
   };
 

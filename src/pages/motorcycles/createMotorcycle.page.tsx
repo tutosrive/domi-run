@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import motorcycleService from '../../services/motorcycle.service';
 import Motorcycle from '../../models/Motorcycle.model';
@@ -15,10 +14,10 @@ export default function CreateMotorcyclePage() {
   const handleSubmit = async () => {
     const response = await motorcycleService.post_motorcycle(form);
     if (response.status === 200 || response.status === 201) {
-      Swal.fire({ title: 'Success', text: 'Motorcycle created successfully', icon: 'success' });
+      console.log('Moto registrada correctamente');
       navigate('/motorcycles/list');
     } else {
-      Swal.fire({ title: 'Error', text: 'Failed to create motorcycle', icon: 'error' });
+      console.log('Error al registrar moto');
     }
   };
 
