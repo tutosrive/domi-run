@@ -52,12 +52,13 @@ function SidebarComponent() {
             <Ripple />
           </Link>
         <Link
-          className={'btn w-full mb-2 p-ripple orange-ripple'}
-          to={'/shifts/list'}
-          onClick={() => dispatchEvent(setClose())}
-        >
-          <i className="pi pi-clock" /> Shifts
-
+        className={'btn w-full mb-2 p-ripple orange-ripple'}
+        to={'/shifts/list'}
+        onClick={() => dispatchEvent(setClose())}
+      >
+        <i className="pi pi-clock" /> Shifts
+        <Ripple />
+      </Link>
         {/* Navigate to the 'Statistics' page */}
         <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/issues/list'} onClick={() => dispatchEvent(setClose())}>
           <i className={'pi pi-chart-bar'} /> Issues

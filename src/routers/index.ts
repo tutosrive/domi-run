@@ -39,6 +39,10 @@ const ShiftCreate = lazy(() => import('../pages/shifts/createShift.page'));
 const ShiftView = lazy(() => import('../pages/shifts/viewShift.page'));
 const ShiftUpdate = lazy(() => import('../pages/shifts/updateShift.page'));
 
+const MotorcyclesPage = lazy(() => import('../pages/motorcycles/motorcycles.page'));
+const CreateMotorcyclePage = lazy(() => import('../pages/motorcycles/createMotorcycle.page'));
+const ViewMotorcyclePage = lazy(() => import('../pages/motorcycles/viewMotorcycle.page'));
+const UpdateMotorcyclePage = lazy(() => import('../pages/motorcycles/updateMotorcycle.page'));
 
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
