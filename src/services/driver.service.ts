@@ -49,9 +49,9 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
-  async update_driver(id: number): Promise<ReturningService> {
+  async update_driver(id: number, driver:Omit<Driver, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Driver> = await axios.put<Driver>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Driver> = await axios.put<Driver>(`${this.URL}/${id}`, driver);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

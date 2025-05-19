@@ -56,9 +56,9 @@ class CustomerService {
     }
   }
 
-  async update_customer(id: number): Promise<ReturningService> {
+  async update_customer(id: number, customer:Omit<Customer, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Customer> = await axios.put<Customer>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Customer> = await axios.put<Customer>(`${this.URL}/${id}`, customer , this.config_axios);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

@@ -56,9 +56,9 @@ class ProductService {
     }
   }
 
-  async update_product(id: number): Promise<ReturningService> {
+  async update_product(id: number, product: Omit<Product, id>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Product> = await axios.put<Product>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Product> = await axios.put<Product>(`${this.URL}/${id}`, product);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);
