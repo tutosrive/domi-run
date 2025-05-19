@@ -1,12 +1,10 @@
 import axios, { type AxiosResponse } from 'axios';
 import Driver from '../models/Driver.model.ts';
 import ReturningService from '../models/ReturningService.model.ts';
-
 class DriverService {
   private readonly endpoint: string;
   private readonly URL: string;
   private readonly config_axios;
-
   constructor() {
     this.endpoint = 'drivers';
     this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
@@ -17,7 +15,6 @@ class DriverService {
       }
     };
   }
-
   async get_all_driver(): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Driver[]> = await axios.get<Driver[]>(this.URL, this.config_axios);
@@ -26,7 +23,6 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
-
   async get_data_by_id(id: number): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Driver> = await axios.get<Driver>(`${this.URL}/${id}`, this.config_axios);
@@ -35,7 +31,6 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
-
   async post_driver(driver: Driver): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
@@ -46,7 +41,6 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
-
   async delete_driver(id: number): Promise<ReturningService> {
     try {
       const req: AxiosResponse = await axios.delete(`${this.URL}/${id}`);
@@ -55,7 +49,6 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
-
   async update_driver(id: number): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Driver> = await axios.put<Driver>(`${this.URL}/${id}`);
@@ -64,7 +57,20 @@ class DriverService {
       return new ReturningService(500, {}, e);
     }
   }
+  async send_driver_counter(id: number, method: 'POST' | 'PUT'): Promise<ReturningService> {
+  try {
+    const res = await axios({
+      method,
+      url: `${this.URL}/${id}/counter`,
+      headers: this.config_axios.headers,
+    });
+    return new ReturningService(res.status, res.data);
+  } catch (e) {
+    return new ReturningService(500, {}, e);
+  }
 }
+}
+
 
 const driverService = new DriverService();
 export default driverService;
