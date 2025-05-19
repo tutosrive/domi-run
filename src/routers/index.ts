@@ -1,3 +1,4 @@
+import path from 'path';
 import { lazy } from 'react';
 
 const ListAddresses = lazy(() => import('../pages/address/addresses.page'));
@@ -23,7 +24,6 @@ const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page')
 const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
 const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
 
-
 const IssuesPage = lazy(() => import('../pages/issues/issues.page'));
 const CreateIssuesPage = lazy(() => import('../pages/issues/createIssues.page'));
 const UpdateIssuesPage = lazy(() => import('../pages/issues/updateIssues.page'));
@@ -33,7 +33,6 @@ const CustomersPage = lazy(() => import('../pages/customers/customers.page'));
 const CreateCustomerPage = lazy(() => import('../pages/customers/createCustomers.page'));
 const UpdateCustomerPage = lazy(() => import('../pages/customers/updateCustomers.page'));
 const ViewCustomerPage = lazy(() => import('../pages/customers/viewCustomers.page'));
-
 
 const ShiftList = lazy(() => import('../pages/shifts/shifts.page'));
 const ShiftCreate = lazy(() => import('../pages/shifts/createShift.page'));
@@ -50,6 +49,13 @@ const UpdateMenuPage = lazy(() => import('../pages/menus/updateMenu.page'));
 const ViewMenuPage = lazy(() => import('../pages/menus/viewMenu.page'));
 const MenusPage = lazy(() => import('../pages/menus/menus.page'));
 
+const ProductsPage = lazy(() => import('../pages/products/products.page'));
+const createProductPage = lazy(() => import('../pages/products/createProducts.page'));
+const updateProductPage = lazy(() => import('../pages/products/updateProducts.page'));
+const viewProductPage = lazy(() => import('../pages/products/viewProducts.page'));
+
+const CartPage = lazy(() => import('../pages/cart/cart.page'));
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -63,12 +69,20 @@ const routes_index: Array<object> = [
   { path: '/restaurants/update/:id', title: 'Update Restaurant', component: UpdateRestaurantPage },
   { path: '/restaurants/view/:id', title: 'View Restaurant', component: ViewRestaurantPage },
   { path: '/category/drinks', component: HomePage, title: 'Drinks' },
+  { path: '/restaurants/list/', component: RestaurantsPage, title: 'Restaurants' },
+  { path: '/restaurants/create', component: CreateRestaurantPage, title: 'Restaurants' },
+  { path: '/restaurants/update/:id', component: UpdateRestaurantPage, title: 'Update Restaurant' },
+  { path: '/restaurants/view/:id', component: ViewRestaurantPage, title: 'View Restaurant' },
+  { path: '/products/category/:category', component: ProductsPage, title: 'Products' },
+  { path: '/products/create', component: createProductPage, title: 'Create Product' },
+  { path: '/products/update/:id', component: updateProductPage, title: 'Update Product' },
+  { path: '/products/view/:id', component: viewProductPage, title: 'View Product' },
   { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
   { path: '/statistics', component: StatisticsPage, title: 'Statistics Graphics' },
-  { path: '/drivers/list',title: 'Drivers',component: DriversPage,},
-  { path: '/drivers/create',title: 'Create Driver',component: CreateDriverPage,},
-  { path: '/drivers/update/:id',title: 'Update Driver',component: UpdateDriverPage,},
-  { path: '/drivers/view/:id',title: 'View Driver',component: ViewDriverPage,},
+  { path: '/drivers/list', title: 'Drivers', component: DriversPage },
+  { path: '/drivers/create', title: 'Create Driver', component: CreateDriverPage },
+  { path: '/drivers/update/:id', title: 'Update Driver', component: UpdateDriverPage },
+  { path: '/drivers/view/:id', title: 'View Driver', component: ViewDriverPage },
   { path: '/motorcycles/list', component: MotorcyclesPage },
   { path: '/motorcycles/create', component: CreateMotorcyclePage },
   { path: '/motorcycles/view/:id', component: ViewMotorcyclePage },
@@ -90,10 +104,9 @@ const routes_index: Array<object> = [
   { path: '/menus/view/:id', title: 'Ver Menú', component: ViewMenuPage },
   { path: '/menus/update/:id', title: 'Actualizar Menú', component: UpdateMenuPage },
   { path: '/menus/create/:id', title: 'Crear menú', component: CreateMenuPage },
-
+  { path: '/cart', component: CartPage, title: 'Carrito' }
 
 ];
-
 
 const routers = [...routes_index];
 export default routers;

@@ -1,47 +1,71 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import customerService from '../../services/customer.service';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 export default function CreateCustomersPage() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+
+  const initialValues = {
     name: '',
     email: '',
     phone: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
-    const res = await customerService.post_customer(formData);
-    if (res.status === 200 && res.data.id) {
-      await customerService.send_customer_counter(res.data.id, 'POST');
+  const validationSchema = Yup.object({
+    name: Yup.string().min(3, 'Minimo 3 caracteres').required('Nombre requerido'),
+    email: Yup.string().email('Correo inválido').required('Correo requerido'),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, 'Solo números')
+      .min(7, 'Mínimo 7 dígitos')
+      .required('Teléfono requerido'),
+  });
+
+  const handleSubmit = async (values: typeof initialValues) => {
+    const response = await customerService.post_customer(values);
+    if (response.status === 200 || response.status === 201) {
+      Swal.fire({ title: 'Success', text: 'Customer created successfully', icon: 'success' });
       navigate('/customers/list');
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to create customers', icon: 'error' });
     }
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10 space-y-4">
       <h2 className="text-xl font-bold text-center">Create new customer</h2>
-      {['name', 'document_number', 'phone', 'email', 'address'].map((field) => (
-        <input
-          key={field}
-          type="text"
-          name={field}
-          value={(formData as any)[field]}
-          onChange={handleChange}
-          placeholder={field}
-          className="w-full border px-3 py-2 rounded"
-        />
-      ))}
-      <button
-        onClick={handleSubmit}
-        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        Crear
-      </button>
+        <Form className="space-y-4">
+          {['name', 'phone', 'email'].map((field) => (
+            <div key={field}>
+              <Field
+                type="text"
+                name={field}
+                placeholder={field}
+                className="w-full border px-3 py-2 rounded"
+              />
+              <ErrorMessage
+                name={field}
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          >
+            Crear
+          </button>
+        </Form>
+      </Formik>
     </div>
   );
 }

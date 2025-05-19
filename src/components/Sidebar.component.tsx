@@ -61,12 +61,12 @@ function SidebarComponent() {
       </Link>
         {/* Navigate to the 'Statistics' page */}
         <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/issues/list'} onClick={() => dispatchEvent(setClose())}>
-          <i className={'pi pi-chart-bar'} /> Issues
+          <i className={'pi pi-exclamation-triangle'} /> Issues
           <Ripple />
         </Link>
         {/* Navigate to the 'Statistics' page */}
         <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/customers/list'} onClick={() => dispatchEvent(setClose())}>
-          <i className={'pi pi-chart-bar'} /> Customers
+          <i className={'pi pi-users'} /> Customers
           <Ripple />
         </Link>
         <Link

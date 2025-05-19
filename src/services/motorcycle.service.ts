@@ -38,7 +38,7 @@ class MotorcycleService {
    * Send data to the backend
    * @param motorcycle - motorcycle The Motorcycle to send to the backend.
    */
-  async post_motorcycle(motorcycle: Omit<Motorcycle, id>): Promise<ReturningService> {
+  async post_motorcycle(motorcycle: Motorcycle): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers

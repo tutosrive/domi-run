@@ -36,12 +36,10 @@ class ProductService {
     }
   }
 
-  async post_product(product: Product): Promise<ReturningService> {
+  async create_product(product: Omit<Product, 'id'>): Promise<ReturningService> {
     try {
-      const __config = { headers: { ['Content-Type']: 'application/json' } };
-      Object.assign(__config.headers, this.config_axios.headers);
-      const req: AxiosResponse<Product> = await axios.post<Product>(this.URL, product, __config);
-      return new ReturningService(req.status, req.data);
+      const res = await axios.post(`${this.URL}`, product, this.config_axios);
+      return new ReturningService(res.status, res.data);
     } catch (e) {
       return new ReturningService(500, {}, e);
     }
@@ -49,16 +47,16 @@ class ProductService {
 
   async delete_product(id: number): Promise<ReturningService> {
     try {
-      const req: AxiosResponse = await axios.delete(`${this.URL}/${id}`);
+      const req: AxiosResponse = await axios.delete(`${this.URL}/${id}`, this.config_axios);
       return new ReturningService(req.status);
     } catch (e) {
       return new ReturningService(500, {}, e);
     }
   }
 
-  async update_product(id: number): Promise<ReturningService> {
+  async update_product(id: number, product: Omit<Product, 'id'>): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Product> = await axios.put<Product>(`${this.URL}/${id}`);
+      const req: AxiosResponse<Product> = await axios.put<Product>(`${this.URL}/${id}`, product, this.config_axios);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

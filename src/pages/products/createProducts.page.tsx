@@ -1,6 +1,4 @@
-// src/pages/menus/createMenu.page.tsx
-import { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import menuService from '../../services/menu.service';
 import productService from '../../services/product.service';
@@ -52,24 +50,21 @@ export default function CreateMenuPage() {
   };
 
   const handleSubmit = async () => {
-
-    const res = await menuService.create(formData);
-    if (res.status === 200 || res.status === 201) {
-      Swal.fire({ title: 'Success', text: 'Menu created successfully', icon: 'success' });
-      navigate(`/restaurants/view/${id}`);
-    } else {
-      Swal.fire({ title: 'Error', text: 'Failed to create menu', icon: 'error' });
-
     let productId = formData.product_id;
 
     if (createNewProduct) {
       const res = await productService.create_product(newProduct);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data?.id) {
         productId = res.data.id;
       } else {
         alert('Error al crear producto');
         return;
       }
+    }
+
+    if (!productId || productId === -1) {
+      alert('Selecciona o crea un producto válido');
+      return;
     }
 
     const menuPayload = { ...formData, product_id: productId };
@@ -78,21 +73,20 @@ export default function CreateMenuPage() {
       navigate(`/restaurants/view/${id}`);
     } else {
       alert('Error al crear menú');
-
     }
   };
 
   return (
-     <div className="max-w-lg mx-auto mt-10 space-y-4">
-      <h2 className="text-xl font-bold text-center">Crear Menú</h2>
+    <div className="max-w-lg mx-auto mt-10 space-y-4">
+      <h2 className="text-xl font-bold text-center text-white">Crear Menú</h2>
 
       {!createNewProduct && (
         <select
           name="product_id"
           value={formData.product_id}
           onChange={handleChange}
-          className="w-full border p-2 rounded">
-        
+          className="w-full border px-3 py-2 rounded text-white bg-transparent border-white"
+        >
           <option value={-1}>Selecciona un producto existente</option>
           {products.map((p) => (
             <option key={p.id} value={p.id}>
@@ -108,7 +102,7 @@ export default function CreateMenuPage() {
           checked={createNewProduct}
           onChange={() => setCreateNewProduct(!createNewProduct)}
         />
-        <span className="text-">Crear nuevo producto</span>
+        <span className="text-white">Crear nuevo producto</span>
       </div>
 
       {createNewProduct && (
@@ -119,7 +113,7 @@ export default function CreateMenuPage() {
             placeholder="Nombre del producto"
             value={newProduct.name}
             onChange={handleProductChange}
-            className="w-full border px-3 py-2 rounded text-white"
+            className="w-full border px-3 py-2 rounded text-white bg-transparent border-white"
           />
           <input
             name="description"
@@ -127,7 +121,7 @@ export default function CreateMenuPage() {
             placeholder="Descripción"
             value={newProduct.description}
             onChange={handleProductChange}
-            className="w-full border px-3 py-2 rounded text-white"
+            className="w-full border px-3 py-2 rounded text-white bg-transparent border-white"
           />
           <input
             name="price"
@@ -135,20 +129,19 @@ export default function CreateMenuPage() {
             placeholder="Precio"
             value={isNaN(newProduct.price) ? '' : newProduct.price}
             onChange={handleProductChange}
-            className="w-full border px-3 py-2 rounded text-white"
+            className="w-full border px-3 py-2 rounded text-white bg-transparent border-white"
           />
           <select
-          name="category"
-          value={newProduct.category}
-          onChange={handleProductChange}
-          className="w-full border px-3 py-2 rounded"
-          style={{ color: 'white' }}
-        >
-          <option value="appetizers">Appetizers</option>
-          <option value="main-courses">Main Courses</option>
-          <option value="desserts">Desserts</option>
-          <option value="drinks">Drinks</option>
-        </select>
+            name="category"
+            value={newProduct.category}
+            onChange={handleProductChange}
+            className="w-full border px-3 py-2 rounded bg-transparent border-white text-white"
+          >
+            <option value="appetizers">Appetizers</option>
+            <option value="main-courses">Main Courses</option>
+            <option value="desserts">Desserts</option>
+            <option value="drinks">Drinks</option>
+          </select>
         </>
       )}
 
@@ -158,7 +151,7 @@ export default function CreateMenuPage() {
         placeholder="Precio del menú"
         value={isNaN(formData.price) ? '' : formData.price}
         onChange={handleChange}
-        className="w-full border px-3 py-2 rounded text-white"
+        className="w-full border px-3 py-2 rounded text-white bg-transparent border-white"
       />
 
       <label className="flex items-center space-x-2 text-white">

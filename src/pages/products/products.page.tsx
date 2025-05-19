@@ -1,61 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import TableDataPrimeComponent, { type DataTableObject } from '../../components/TableDataPrime.component';
-import Product from '../../models/Product.model';
-import productService from '../../services/product.service';
-import type ReturningService from '../../models/ReturningService.model';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../slice/cart.slice';
+import Product from '../../models/Product.model.ts';
+import productService from '../../services/product.service.ts';
 import LoaderPointsComponent from '../../components/LoaderPoints.component.tsx';
 
 export default function ProductsPage() {
+  const { category } = useParams<{ category: string }>();
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getProducts = async () => {
-    const res_products: ReturningService = await productService.get_all_product();
-    const data: Product[] = res_products.data ? (res_products.data as Product[]) : [new Product()];
+    setLoading(true);
+    const resProducts = await productService.get_all_product();
+    let data: Product[] = resProducts.data ? (resProducts.data as Product[]) : [];
+
+    if (category && category !== 'all') {
+      data = data.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+    }
+
     setProducts(data);
+    setLoading(false);
   };
 
   useEffect(() => {
     getProducts();
-  }, []);
-
-  const removeProduct = async (id: string | number) => {
-    const req = await productService.delete_product(Number(id));
-    if (req.status === 200) {
-      alert(`Producto con id (${id}) eliminado`);
-      getProducts(); 
-    }
-  };
-
-  const dataTable: DataTableObject = {
-    arrayData: products,
-    headerTable: <p>Products</p>,
-  };
+  }, [category]);
 
   return (
     <>
-      <div className={'text-center mb-2'}>
-        <h1>Products</h1>
+      <div className="text-center mb-4">
+        <h1 className="text-2xl font-bold">Products</h1>
+        <h3 className="italic text-gray-500">Category: {category}</h3>
       </div>
-      <div className={'flex justify-center'}>
-        {products.length > 0 ? (
-          <TableDataPrimeComponent
-            data={dataTable}
-            navigation={{
-              navigate,
-              urls: {
-                create: '/products/create',
-                update: '/products/update',
-                view: '/products/view',
-              },
-            }}
-            onRemove={(id) => removeProduct(id)}
-          />
+
+      <div className="max-w-3xl mx-auto p-4">
+        {loading ? (
+          <LoaderPointsComponent />
+        ) : products.length > 0 ? (
+          products.map(product => (
+            <div key={product.id} className="border p-4 rounded shadow mb-4 bg-blue">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="font-bold">{product.name}</h4>
+                  <p className="text-sm text-gray-500">{product.description}</p>
+                  <p className="text-green-600 font-bold">${product.price}</p>
+                </div>
+                <button
+                  onClick={() => dispatch(addToCart(product))}
+                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                >
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+          ))
         ) : (
-          <div className={'w-screen h-screen fixed top-1/2'}>
-            <LoaderPointsComponent />
-          </div>
+          <p>No products found for category "{category}"</p>
         )}
       </div>
     </>
