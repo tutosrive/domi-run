@@ -7,25 +7,32 @@ import ReturningService from '../../models/ReturningService.model';
 import LoaderPointsComponent from '../../components/LoaderPoints.component';
 
 export default function ShiftsPage() {
-  const [shifts, setShifts] = useState<any[]>([]); // Usamos `any` para datos aplanados
+  const [shifts, setShifts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const getShifts = async () => {
+    setLoading(true);
     const res: ReturningService = await shiftService.get_all();
-    console.log('Respuesta del servicio de shifts:', res)
-    const originalData = res.data as Shift[];
-    console.warn('La data no es un arreglo:', originalData);
-    // Convertimos campos tipo Date y objetos a texto legible
+    console.log('Respuesta del servicio de shifts:', res);
+
+    const originalData = Array.isArray(res.data) ? (res.data as Shift[]) : [];
+    if (!Array.isArray(res.data)) {
+      console.warn('Advertencia: res.data no es un arreglo:', res.data);
+    }
+
     const formatted = originalData.map((s) => ({
-  id: s.id,
-  driver_id: typeof s.driver_id === 'object' ? (s.driver_id as any).name : s.driver_id,
-  motorcycle_id: typeof s.motorcycle_id === 'object' ? (s.motorcycle_id as any).license_plate : s.motorcycle_id,
-  start_time: new Date(s.start_time!).toLocaleString(),
-  end_time: new Date(s.end_time!).toLocaleString(),
-  status: s.status,
-}));
+      id: s.id,
+      driver_id: typeof s.driver_id === 'object' ? (s.driver_id as any).name : s.driver_id,
+      motorcycle_id: typeof s.motorcycle_id === 'object' ? (s.motorcycle_id as any).license_plate : s.motorcycle_id,
+      start_time: s.start_time ? new Date(s.start_time).toLocaleString() : '',
+      end_time: s.end_time ? new Date(s.end_time).toLocaleString() : '',
+      status: s.status,
+    }));
+
     console.log('Shifts formateados:', formatted);
     setShifts(formatted);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -48,7 +55,11 @@ export default function ShiftsPage() {
         <h1 className="text-xl font-bold">Lista de Turnos</h1>
       </div>
       <div className="flex justify-center">
-        {shifts.length > 0 ? (
+        {loading ? (
+          <div className="w-screen h-screen fixed top-1/2">
+            <LoaderPointsComponent />
+          </div>
+        ) : (
           <TableDataPrimeComponent
             data={dataTable}
             navigation={{
@@ -61,10 +72,6 @@ export default function ShiftsPage() {
             }}
             onRemove={removeShift}
           />
-        ) : (
-          <div className="w-screen h-screen fixed top-1/2">
-            <LoaderPointsComponent />
-          </div>
         )}
       </div>
     </>
