@@ -1,31 +1,34 @@
-import React from 'react';
+import './index.css';
+import App from './App.tsx';
 import ReactDOM from 'react-dom/client';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { PrimeReactProvider } from 'primereact/api';
-import App from './App';
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import './index.css';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 // Microsoft requires to login
-import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
 import { msalConfig } from './auth/authConfig';
+
 import { Provider } from 'react-redux';
 import Store from './store/store';
+import { PrimeReactProvider } from 'primereact/api';
 
 const msalInstance = new PublicClientApplication(msalConfig);
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-root.render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <PrimeReactProvider value={{ ripple: true }}>
+    <GoogleOAuthProvider clientId="850169876551-d5bij8ieqfbdhod0n3t6g2gdq6av3j98.apps.googleusercontent.com">
       <MsalProvider instance={msalInstance}>
         <Provider store={Store}>
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <App />
-          </BrowserRouter>
+          <PrimeReactProvider value={{ ripple: true }}>
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <App />
+            </BrowserRouter>
+          </PrimeReactProvider>
         </Provider>
       </MsalProvider>
-    </PrimeReactProvider>
-  </React.StrictMode>,
+    </GoogleOAuthProvider>
+  </React.StrictMode>
 );
