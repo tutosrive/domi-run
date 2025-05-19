@@ -15,8 +15,8 @@ export default function CategoryProductsMenu() {
         {
           template: () => (
             <div className={'p-ripple orange-ripple'}>
-              <Link to="/category/main-dishes" className="p-menuitem-link btn bg-yellow-600">
-                <span className="p-menuitem-text">Main Dishes</span>
+              <Link to="products/category/all" className="p-menuitem-link btn bg-yellow-600">
+                <span className="p-menuitem-text">All</span>
                 <Ripple />
               </Link>
             </div>
@@ -25,7 +25,37 @@ export default function CategoryProductsMenu() {
         {
           template: () => (
             <div className={'p-ripple orange-ripple'}>
-              <Link to="/category/drinks" className="p-menuitem-link btn bg-yellow-600">
+              <Link to="/products/category/appetizers" className="p-menuitem-link btn bg-yellow-600">
+                <span className="p-menuitem-text">Appetizers</span>
+                <Ripple />
+              </Link>
+            </div>
+          ),
+        },
+        {
+          template: () => (
+            <div className={'p-ripple orange-ripple'}>
+              <Link to="/products/category/main-courses" className="p-menuitem-link btn bg-yellow-600">
+                <span className="p-menuitem-text">Main Courses</span>
+                <Ripple />
+              </Link>
+            </div>
+          ),
+        },
+        {
+          template: () => (
+            <div className={'p-ripple orange-ripple'}>
+              <Link to="/products/category/desserts" className="p-menuitem-link btn bg-yellow-600">
+                <span className="p-menuitem-text">Desserts</span>
+                <Ripple />
+              </Link>
+            </div>
+          ),
+        },
+        {
+          template: () => (
+            <div className={'p-ripple orange-ripple'}>
+              <Link to="/products/category/drinks" className="p-menuitem-link btn bg-yellow-600">
                 <span className="p-menuitem-text">Drinks</span>
                 <Ripple />
               </Link>
