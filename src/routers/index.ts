@@ -61,7 +61,7 @@ const routes_index: Array<object> = [
   { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
   { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
   { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
-
+]
 
 const routers = [...routes_index];
 export default routers;
