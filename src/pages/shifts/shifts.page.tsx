@@ -12,8 +12,9 @@ export default function ShiftsPage() {
 
   const getShifts = async () => {
     const res: ReturningService = await shiftService.get_all();
+    console.log('Respuesta del servicio de shifts:', res)
     const originalData = res.data as Shift[];
-
+    console.warn('La data no es un arreglo:', originalData);
     // Convertimos campos tipo Date y objetos a texto legible
     const formatted = originalData.map((s) => ({
   id: s.id,
@@ -23,6 +24,7 @@ export default function ShiftsPage() {
   end_time: new Date(s.end_time!).toLocaleString(),
   status: s.status,
 }));
+    console.log('Shifts formateados:', formatted);
     setShifts(formatted);
   };
 

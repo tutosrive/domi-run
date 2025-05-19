@@ -11,12 +11,13 @@ const ProfilePage = lazy(() => import('../pages/Profile.page'));
 const HomePage = lazy(() => import('../pages/Home.page'));
 
 const RestaurantsPage = lazy(() => import('../pages/restaurants/restaurants.page'));
+const CreateRestaurantPage = lazy(() => import('../pages/restaurants/createRestaurant.page'));
 const UpdateRestaurantPage = lazy(() => import('../pages/restaurants/updateRestaurant.page'));
 const ViewRestaurantPage = lazy(() => import('../pages/restaurants/viewRestaurant.page'));
-const CreateRestaurantPage = lazy(() => import('../pages/restaurants/createRestaurant.page'));
-const StatisticsPage = lazy(() => import('../pages/statistics.page'));
 
 const OAuthCallbackPage = lazy(() => import('../pages/OAuthCallbackPage'));
+
+const StatisticsPage = lazy(() => import('../pages/statistics.page'));
 
 const DriversPage = lazy(() => import('../pages/drivers/drivers.page'));
 const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page'));
@@ -43,6 +44,11 @@ const CreateMotorcyclePage = lazy(() => import('../pages/motorcycles/createMotor
 const ViewMotorcyclePage = lazy(() => import('../pages/motorcycles/viewMotorcycle.page'));
 const UpdateMotorcyclePage = lazy(() => import('../pages/motorcycles/updateMotorcycle.page'));
 
+const CreateMenuPage = lazy(() => import('../pages/menus/createMenu.page'));
+const UpdateMenuPage = lazy(() => import('../pages/menus/updateMenu.page'));
+const ViewMenuPage = lazy(() => import('../pages/menus/viewMenu.page'));
+const MenusPage = lazy(() => import('../pages/menus/menus.page'));
+
 const ProductsPage = lazy(() => import('../pages/products/products.page'));
 const createProductPage = lazy(() => import('../pages/products/createProducts.page'));
 const updateProductPage = lazy(() => import('../pages/products/updateProducts.page'));
@@ -56,6 +62,11 @@ const routes_index: Array<object> = [
   { path: '/login', component: SignInPage, title: 'Login' },
   { path: '/profile', component: ProfilePage, title: 'Profile' },
   { path: '/home', component: HomePage, title: 'Dom Run' },
+  { path: '/restaurants/list', title: 'Restaurants', component: RestaurantsPage },
+  { path: '/restaurants/create', title: 'Create Restaurant', component: CreateRestaurantPage },
+  { path: '/restaurants/update/:id', title: 'Update Restaurant', component: UpdateRestaurantPage },
+  { path: '/restaurants/view/:id', title: 'View Restaurant', component: ViewRestaurantPage },
+  { path: '/category/drinks', component: HomePage, title: 'Drinks' },
   { path: '/restaurants/list/', component: RestaurantsPage, title: 'Restaurants' },
   { path: '/restaurants/create', component: CreateRestaurantPage, title: 'Restaurants' },
   { path: '/restaurants/update/:id', component: UpdateRestaurantPage, title: 'Update Restaurant' },
@@ -86,6 +97,13 @@ const routes_index: Array<object> = [
   { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
   { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
   { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
+  { path: '/menus', title: 'Menús', component: MenusPage },
+  { path: '/menus/create', title: 'Crear Menú', component: CreateMenuPage },
+  { path: '/menus/view/:id', title: 'Ver Menú', component: ViewMenuPage },
+  { path: '/menus/update/:id', title: 'Actualizar Menú', component: UpdateMenuPage },
+  { path: '/menus/create/:id', title: 'Crear menú', component: CreateMenuPage },
+
+
 ];
 
 const routers = [...routes_index];

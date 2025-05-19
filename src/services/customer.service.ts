@@ -5,16 +5,18 @@ import ReturningService from '../models/ReturningService.model.ts';
 class CustomerService {
   private readonly endpoint: string;
   private readonly URL: string;
+  private readonly URL_API: string;
   private readonly config_axios;
 
   constructor() {
     this.endpoint = 'customers';
-    this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
+    this.URL_API = import.meta.env.VITE_URL_API;
+    this.URL = `${this.URL_API}/${this.endpoint}`;
     this.config_axios = {
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     };
   }
 
@@ -59,6 +61,14 @@ class CustomerService {
   async update_customer(id: number, customer:Omit<Customer, id>): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Customer> = await axios.put<Customer>(`${this.URL}/${id}`, customer , this.config_axios);
+      return new ReturningService(req.status, req.data || {});
+    } catch (e) {
+      return new ReturningService(500, {}, e);
+    }
+  }
+  async get_history_customers_register(): Promise<ReturningService> {
+    try {
+      const req: AxiosResponse<{ month: string; registrations: number }> = await axios.get<{ month: string; registrations: number }>(`${this.URL_API}/stats/${this.endpoint}/registration-history`, this.config_axios);
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

@@ -15,9 +15,18 @@ function HeaderComponent() {
   const dispatchEvent = useDispatch();
 
   useEffect(() => {
+  try {
     const _user_localSt = sessionStorage.getItem('user_domi_run');
-    if (_user_localSt) setUser(JSON.parse(_user_localSt));
-  }, []);
+    if (_user_localSt && _user_localSt !== 'undefined') {
+      const parsedUser = JSON.parse(_user_localSt);
+      setUser(parsedUser);
+    }
+  } catch (err) {
+    console.error('Error parsing user from sessionStorage:', err);
+    sessionStorage.removeItem('user_domi_run'); // Limpia el valor inválido
+  }
+}, []);
+
 
   const user_avatar = () => {
     // Should be a iamge... (Feature)

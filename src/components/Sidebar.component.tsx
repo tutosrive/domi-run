@@ -69,14 +69,14 @@ function SidebarComponent() {
           <i className={'pi pi-users'} /> Customers
           <Ripple />
         </Link>
-        {/* Navigate to the 'Drivers' page */}
-   
-        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/drivers/list'} onClick={() => dispatchEvent(setClose())}>
-          <i className={'pi pi-truck'} /> Drivers
-
+        <Link
+          className={'btn w-full mb-2 p-ripple orange-ripple'}
+          to={'/menus'}
+          onClick={() => dispatchEvent(setClose())}
+        >
+          <i className={'pi pi-list'} /> Menús
           <Ripple />
         </Link>
-
       </Sidebar>
     </>
   );
