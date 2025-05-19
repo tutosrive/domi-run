@@ -36,7 +36,7 @@ class ProductService {
     }
   }
 
-  async post_product(product: string): Promise<ReturningService> {
+  async post_product(product: Product): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       Object.assign(__config.headers, this.config_axios.headers);
