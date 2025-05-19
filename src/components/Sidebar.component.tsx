@@ -55,6 +55,14 @@ function SidebarComponent() {
             <i className="pi pi-car" /> Motorcycles
             <Ripple />
           </Link>
+        <Link
+          className={'btn w-full mb-2 p-ripple orange-ripple'}
+          to={'/shifts/list'}
+          onClick={() => dispatchEvent(setClose())}
+        >
+          <i className="pi pi-clock" /> Shifts
+          <Ripple />
+        </Link>
 
       </Sidebar>
     </>

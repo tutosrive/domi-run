@@ -27,6 +27,12 @@ const CreateMotorcyclePage = lazy(() => import('../pages/motorcycles/createMotor
 const ViewMotorcyclePage = lazy(() => import('../pages/motorcycles/viewMotorcycle.page'));
 const UpdateMotorcyclePage = lazy(() => import('../pages/motorcycles/updateMotorcycle.page'));
 
+const ShiftList = lazy(() => import('../pages/shifts/shifts.page'));
+const ShiftCreate = lazy(() => import('../pages/shifts/createShift.page'));
+const ShiftView = lazy(() => import('../pages/shifts/viewShift.page'));
+const ShiftUpdate = lazy(() => import('../pages/shifts/updateShift.page'));
+
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -54,6 +60,11 @@ const routes_index: Array<object> = [
   { path: '/motorcycles/create', component: CreateMotorcyclePage },
   { path: '/motorcycles/view/:id', component: ViewMotorcyclePage },
   { path: '/motorcycles/update/:id', component: UpdateMotorcyclePage },
+  { path: '/shifts/list', title: 'Shifts', component: ShiftList },
+  { path: '/shifts/create', title: 'Create Shift', component: ShiftCreate },
+  { path: '/shifts/view/:id', title: 'View Shift', component: ShiftView },
+  { path: '/shifts/update/:id', title: 'Update Shift', component: ShiftUpdate },
+
 ];
 
 const routers = [...routes_index];
