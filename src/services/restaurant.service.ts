@@ -78,14 +78,19 @@ class RestaurantService {
     }
   }
 
-  async get_menus(id: number): Promise<ReturningService> {
+    async get_menus(id?: number): Promise<ReturningService> {
+    if (!id || isNaN(id)) {
+      return new ReturningService(400, {}, new Error('Invalid restaurant ID'));
+    }
+
     try {
-      const req: AxiosResponse<Menu[]> = await axios.get<Menu[]>(`${this.URL}/${id}/menus`);
-      return new ReturningService(req.status, req.data || {});
+      const req: AxiosResponse<Menu[]> = await axios.get<Menu[]>(`${this.URL}/${id}/menus`, this.config_axios);
+      return new ReturningService(req.status, req.data || []);
     } catch (e) {
       return new ReturningService(500, {}, e);
     }
   }
+
 }
 
 const restaurantService = new RestaurantService();

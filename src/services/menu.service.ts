@@ -62,6 +62,15 @@ class MenuService {
       return new ReturningService(500, {}, e);
     }
   }
+  async get_by_restaurant(restaurantId: number): Promise<ReturningService> {
+    try {
+      const url = `${import.meta.env.VITE_URL_API}/restaurants/${restaurantId}/menus`;
+      const res: AxiosResponse<Menu[]> = await axios.get(url);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
+    }
+  }
 }
 
 export default new MenuService();
