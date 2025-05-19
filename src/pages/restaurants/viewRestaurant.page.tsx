@@ -1,79 +1,70 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import restaurantService from '../../services/restaurant.service';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import TableDataPrimeComponent, { type DataTableObject } from '../../components/TableDataPrime.component';
-import LoaderPointsComponent from '../../components/LoaderPoints.component.tsx';
+import menuService from '../../services/menu.service';
+import Restaurant from '../../models/Restaurant.model';
 import Menu from '../../models/Menu.model';
-import menuService from '../../services/menu.service.ts';
-import Swal from 'sweetalert2';
 
 export default function ViewRestaurantPage() {
   const { id } = useParams();
-  const [data, setData] = useState<Menu[]>([]);
   const navigate = useNavigate();
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [menus, setMenus] = useState<Menu[]>([]);
 
-  const orderData = (data) => {
-    const menus = [];
-    data.forEach((menu) => {
-      menus.push({
-        availability: menu.availability,
-        id: menu.id,
-        price: menu.price,
-        product: menu.product.name,
-        restaurant: menu.restaurant.name,
-      });
-    });
-    return menus;
-  };
+ useEffect(() => {
+  if (!id) return; // Asegura que `id` existe antes de usarlo
 
-  const Getdata = async () => {
-    const req = await restaurantService.get_menus(id);
-    console.log(req.data);
-    if (req.status === 200 && req.data?.length > 0) {
-      setData(orderData(req.data));
-    }
-  };
-  useEffect(() => {
-    Getdata();
-  }, []);
+  const fetchData = async () => {
+    const res = await restaurantService.get_data_by_id(Number(id));
+    setRestaurant(res.data as Restaurant);
 
-  const removeMenu = async (idMenu) => {
-    const req = await menuService.delete(idMenu);
-    if (req.status === 200) {
-      Swal.fire({
-        title: 'Removed',
-        text: `Menu with id "${idMenu}" has been removed from restaurant with id "${id}"`,
-        icon: 'success',
-        timer: 2000,
-      });
-    }
+    const resMenus = await menuService.get_by_restaurant(Number(id));
+    setMenus(resMenus.data as Menu[]);
   };
+  fetchData();
+}, [id]);
 
-  const dataTable: DataTableObject = {
-    arrayData: data,
-  };
 
-  const navigators = {
-    navigate: navigate,
-    urls: {
-      update: '/menu/update',
-      view: '/menu/view',
-      create: `/restaurant/${id}/menu/create`,
-    },
-  };
+  if (!restaurant) return <p>Cargando...</p>;
 
   return (
-    <>
-      <div className={'text-center'}>
-        <h1>Menus Restaurant with id "{id}"</h1>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Restaurante: {restaurant.name}</h2>
+      <p><strong>Dirección:</strong> {restaurant.address}</p>
+      <p><strong>Teléfono:</strong> {restaurant.phone}</p>
+
+      <hr className="my-6" />
+
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold">Menú del Restaurante</h3>
+        <button
+          onClick={() => navigate(`/menus/create/${restaurant.id}`)}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Agregar Menú
+        </button>
       </div>
-      {data.length > 0 ? (
-        <TableDataPrimeComponent data={dataTable} navigation={navigators} onRemove={(id) => removeMenu(id)} />
+
+      {menus.length > 0 ? (
+        <ul className="space-y-2">
+          {menus.map((menu) => (
+            <li key={menu.id} className="border p-3 rounded flex justify-between items-center">
+              <div>
+                <p className="font-semibold">{menu.title}</p>
+                <p className="text-sm">{menu.description}</p>
+              </div>
+              <button
+                onClick={() => navigate(`/menus/update/${menu.id}`)}
+                className="text-sm bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded"
+              >
+                Editar
+              </button>
+            </li>
+          ))}
+        </ul>
       ) : (
-        <div className={'w-screen h-screen fixed top-1/2'}>
-          <LoaderPointsComponent />
-        </div>
+        <p>No hay menús registrados.</p>
       )}
-    </>
+    </div>
   );
 }

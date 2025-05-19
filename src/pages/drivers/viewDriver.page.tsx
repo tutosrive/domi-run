@@ -1,4 +1,3 @@
-// src/pages/drivers/viewDriver.page.tsx
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import driverService from '../../services/driver.service';

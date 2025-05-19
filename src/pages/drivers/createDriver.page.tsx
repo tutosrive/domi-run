@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import driverService from '../../services/driver.service';
+import Driver from '../../models/Driver.model';
 
 export default function CreateDriverPage() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<Driver, 'id'>>({
     name: '',
     license_number: '',
     phone: '',
@@ -19,11 +20,14 @@ export default function CreateDriverPage() {
 
   const handleSubmit = async () => {
     const res = await driverService.post_driver(formData);
-    console.log(res);
+    console.log('Respuesta del backend:', res);
 
-    if (res.status === 200 && res.data[0].id) {
-      await driverService.send_driver_counter(res.data[0].id, { delta: 0 });
+    if ((res.status === 200 || res.status === 201) && res.data.id) {
+      await driverService.send_driver_counter(res.data.id, {delta: 0});
+      console.log('Redirigiendo...');
       navigate('/drivers/list');
+    } else {
+      console.warn('No se creó el conductor correctamente');
     }
   };
 
