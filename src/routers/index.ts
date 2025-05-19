@@ -17,6 +17,11 @@ const StatisticsPage = lazy(() => import('../pages/statistics.page'));
 
 const OAuthCallbackPage = lazy(() => import('../pages/OAuthCallbackPage'));
 
+const DriversPage = lazy(() => import('../pages/drivers/drivers.page'));
+const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page'));
+const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
+const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -36,6 +41,10 @@ const routes_index: Array<object> = [
   { path: '/customers/create/', component: HomePage, title: 'Create Customer' },
   { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
   { path: '/statistics', component: StatisticsPage, title: 'Statistics Graphics' },
+  { path: '/drivers/list',title: 'Drivers',component: DriversPage,},
+  { path: '/drivers/create',title: 'Create Driver',component: CreateDriverPage,},
+  { path: '/drivers/update/:id',title: 'Update Driver',component: UpdateDriverPage,},
+  { path: '/drivers/view/:id',title: 'View Driver',component: ViewDriverPage,},
 ];
 
 const routers = [...routes_index];
