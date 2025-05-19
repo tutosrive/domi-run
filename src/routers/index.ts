@@ -34,6 +34,12 @@ const UpdateCustomerPage = lazy(() => import('../pages/customers/updateCustomers
 const ViewCustomerPage = lazy(() => import('../pages/customers/viewCustomers.page'));
 
 
+const ShiftList = lazy(() => import('../pages/shifts/shifts.page'));
+const ShiftCreate = lazy(() => import('../pages/shifts/createShift.page'));
+const ShiftView = lazy(() => import('../pages/shifts/viewShift.page'));
+const ShiftUpdate = lazy(() => import('../pages/shifts/updateShift.page'));
+
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -49,10 +55,18 @@ const routes_index: Array<object> = [
   { path: '/category/drinks', component: HomePage, title: 'Drinks' },
   { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
   { path: '/statistics', component: StatisticsPage, title: 'Statistics Graphics' },
-  { path: '/drivers/list', title: 'Drivers', component: DriversPage },
-  { path: '/drivers/create', title: 'Create Driver', component: CreateDriverPage },
-  { path: '/drivers/update/:id', title: 'Update Driver', component: UpdateDriverPage },
-  { path: '/drivers/view/:id', title: 'View Driver', component: ViewDriverPage },
+  { path: '/drivers/list',title: 'Drivers',component: DriversPage,},
+  { path: '/drivers/create',title: 'Create Driver',component: CreateDriverPage,},
+  { path: '/drivers/update/:id',title: 'Update Driver',component: UpdateDriverPage,},
+  { path: '/drivers/view/:id',title: 'View Driver',component: ViewDriverPage,},
+  { path: '/motorcycles/list', component: MotorcyclesPage },
+  { path: '/motorcycles/create', component: CreateMotorcyclePage },
+  { path: '/motorcycles/view/:id', component: ViewMotorcyclePage },
+  { path: '/motorcycles/update/:id', component: UpdateMotorcyclePage },
+  { path: '/shifts/list', title: 'Shifts', component: ShiftList },
+  { path: '/shifts/create', title: 'Create Shift', component: ShiftCreate },
+  { path: '/shifts/view/:id', title: 'View Shift', component: ShiftView },
+  { path: '/shifts/update/:id', title: 'Update Shift', component: ShiftUpdate },
   { path: '/issues/list', title: 'Issues', component: IssuesPage },
   { path: '/issues/create', title: 'Create Issue', component: CreateIssuesPage },
   { path: '/issues/update/:id', title: 'Update Issue', component: UpdateIssuesPage },
@@ -61,7 +75,8 @@ const routes_index: Array<object> = [
   { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
   { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
   { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
-]
+];
+
 
 const routers = [...routes_index];
 export default routers;
