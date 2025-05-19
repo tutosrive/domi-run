@@ -1,44 +1,50 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import driverService from '../../services/driver.service';
-import Driver from '../../models/Driver.model';
+import motorcycleService from '../../services/motorcycle.service';
+import Motorcycle from '../../models/Motorcycle.model';
 
-export default function CreateDriverPage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<Omit<Driver, 'id'>>({
-    name: '',
-    license_number: '',
-    phone: '',
-    email: '',
+export default function CreateMotorcyclePage() {
+  const [form, setForm] = useState<Omit<Motorcycle, 'id'>>({
+    license_plate: '',
+    brand: '',
+    year: new Date().getFullYear(),
     status: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: name === 'year' ? parseInt(value) : value,
+    });
   };
 
   const handleSubmit = async () => {
-    const response = await driverService.post_driver(formData);
+    if (!form.license_plate || !form.brand || !form.year || !form.status) {
+      Swal.fire({ title: 'Error', text: 'Todos los campos son obligatorios.', icon: 'warning' });
+      return;
+    }
+
+    const response = await motorcycleService.post_motorcycle(form);
     if (response.status === 200 || response.status === 201) {
-      await driverService.send_driver_counter(response.data.id, {delta: 0});
-      Swal.fire({ title: 'Success', text: 'Driver created successfully', icon: 'success' });
-      navigate('/drivers/list');
+      Swal.fire({ title: 'Éxito', text: 'Motocicleta creada correctamente.', icon: 'success' });
+      navigate('/motorcycles/list');
     } else {
-      Swal.fire({ title: 'Error', text: 'Failed to create driver', icon: 'error' });
+      Swal.fire({ title: 'Error', text: 'Error al crear la motocicleta.', icon: 'error' });
     }
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 space-y-4">
-      <h2 className="text-xl font-bold text-center">Crear nuevo conductor</h2>
-      {['name', 'license_number', 'phone', 'email', 'status'].map((field) => (
-        <input key={field} type="text" name={field} value={(formData as any)[field]} onChange={handleChange} placeholder={field} className="w-full border px-3 py-2 rounded" />
-      ))}
-      <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-        Crear
-      </button>
+    <div className="container mx-auto max-w-md p-4">
+      <h1 className="text-xl font-semibold mb-4">Crear Moto</h1>
+      <input name="license_plate" placeholder="Placa" onChange={handleChange} className="input mb-2 w-full" />
+      <input name="brand" placeholder="Marca" onChange={handleChange} className="input mb-2 w-full" />
+      <input type="number" name="year" placeholder="Año" onChange={handleChange} className="input mb-2 w-full" />
+      <input name="status" placeholder="Estado" onChange={handleChange} className="input mb-2 w-full" />
+      <button className="btn w-full" onClick={handleSubmit}>Guardar</button>
     </div>
   );
 }
