@@ -10,7 +10,8 @@ class RestaurantService {
   constructor() {
     this.endpoint = 'restaurants';
     this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
-    this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
+    this.token = sessionStorage.getItem('MS_TOKEN_CLIEND_DOMI_RUN');
+    this.config_axios = { headers: { Authorization: `Bearer ${this.token}`, Accept: 'application/json' } };
   }
 
   /**Get all data from restaurants */
@@ -78,7 +79,7 @@ class RestaurantService {
     }
   }
 
-    async get_menus(id?: number): Promise<ReturningService> {
+  async get_menus(id?: number): Promise<ReturningService> {
     if (!id || isNaN(id)) {
       return new ReturningService(400, {}, new Error('Invalid restaurant ID'));
     }
@@ -90,7 +91,6 @@ class RestaurantService {
       return new ReturningService(500, {}, e);
     }
   }
-
 }
 
 const restaurantService = new RestaurantService();

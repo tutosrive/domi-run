@@ -11,7 +11,8 @@ class OrderService {
     this.endpoint = 'orders';
     this.URL_API = import.meta.env.VITE_URL_API;
     this.URL = `${this.URL_API}/${this.endpoint}`;
-    this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
+    this.token = sessionStorage.getItem('MS_TOKEN_CLIEND_DOMI_RUN');
+    this.config_axios = { headers: { Authorization: `Bearer ${this.token}`, Accept: 'application/json' } };
   }
 
   /**Get all data from orders */
