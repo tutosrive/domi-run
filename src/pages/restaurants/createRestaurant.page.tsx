@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import restaurantService from '../../services/restaurant.service';
 import Restaurant from '../../models/Restaurant.model';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +13,12 @@ export default function CreateRestaurantPage() {
   };
 
   const handleSubmit = async () => {
-    const res = await restaurantService.post_restaurant(restaurant);
-    if (res.status === 200) {
+    const response = await restaurantService.post_restaurant(restaurant);
+    if (response.status === 200 || response.status === 201) {
+      Swal.fire({ title: 'Success', text: 'Restaurant created successfully', icon: 'success' });
       navigate('/restaurants/list');
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to create restaurant', icon: 'error' });
     }
   };
 

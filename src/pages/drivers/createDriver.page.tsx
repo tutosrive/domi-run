@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import driverService from '../../services/driver.service';
 import Driver from '../../models/Driver.model';
@@ -19,15 +20,13 @@ export default function CreateDriverPage() {
   };
 
   const handleSubmit = async () => {
-    const res = await driverService.post_driver(formData);
-    console.log('Respuesta del backend:', res);
-
-    if ((res.status === 200 || res.status === 201) && res.data.id) {
-      await driverService.send_driver_counter(res.data.id, {delta: 0});
-      console.log('Redirigiendo...');
+    const response = await driverService.post_driver(formData);
+    if (response.status === 200 || response.status === 201) {
+      await driverService.send_driver_counter(response.data.id, {delta: 0});
+      Swal.fire({ title: 'Success', text: 'Driver created successfully', icon: 'success' });
       navigate('/drivers/list');
     } else {
-      console.warn('No se creó el conductor correctamente');
+      Swal.fire({ title: 'Error', text: 'Failed to create driver', icon: 'error' });
     }
   };
 

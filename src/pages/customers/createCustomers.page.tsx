@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import customerService from '../../services/customer.service';
 
@@ -15,17 +16,19 @@ export default function CreateCustomersPage() {
   };
 
   const handleSubmit = async () => {
-    const res = await customerService.post_customer(formData);
-    if (res.status === 200 && res.data.id) {
-      await customerService.send_customer_counter(res.data.id, 'POST');
+    const response = await customerService.post_customer(formData);
+    if (response.status === 200 || response.status === 201) {
+      Swal.fire({ title: 'Success', text: 'Customer created successfully', icon: 'success' });
       navigate('/customers/list');
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to create customers', icon: 'error' });
     }
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10 space-y-4">
       <h2 className="text-xl font-bold text-center">Create new customer</h2>
-      {['name', 'document_number', 'phone', 'email', 'address'].map((field) => (
+      {['name', 'phone', 'email'].map((field) => (
         <input
           key={field}
           type="text"

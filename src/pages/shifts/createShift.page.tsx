@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import shiftService from '../../services/shift.service';
 import driverService from '../../services/driver.service';
@@ -39,7 +40,12 @@ export default function CreateShiftPage() {
   };
 
   const res = await shiftService.create(payload);
-  if (res.status === 200) navigate('/shifts/list');
+  if (res.status === 200 || res.status === 201) {
+    Swal.fire({ title: 'Success', text: 'Shift created successfully', icon: 'success' });
+    navigate('/shifts/list');
+  } else {
+    Swal.fire({ title: 'Error', text: 'Failed to create shift', icon: 'error' });
+  }
 };
 
 

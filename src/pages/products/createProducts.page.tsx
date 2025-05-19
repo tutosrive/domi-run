@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import productService from '../../services/product.service';
 import Product from '../../models/Product.model';
@@ -25,13 +26,12 @@ export default function CreateProductPage() {
 
   const handleSubmit = async () => {
     const res = await productService.post_product(formData as Product);
-    console.log('Respuesta del backend:', res);
 
-    if ((res.status === 200 || res.status === 201) && res.data?.id) {
-      console.log('Producto creado con éxito. Redirigiendo...');
+    if ((res.status === 200 || res.status === 201)) {
+      Swal.fire({ title: 'Success', text: 'Product created successfully', icon: 'success' });
       navigate('/products');
     } else {
-      console.warn('No se creó el producto correctamente');
+      Swal.fire({ title: 'Error', text: 'Failed to create product', icon: 'error' });
     }
   };
 
