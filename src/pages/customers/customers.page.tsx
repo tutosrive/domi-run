@@ -11,13 +11,9 @@ export default function CustomersPage() {
   const navigate = useNavigate();
 
   const getCustomers = async () => {
-    const res_customers: ReturningService = await customerService.get_all_customer();
-    const data: Customer[] = res_customers.data
-      ? (res_customers.data as Customer[])
-      : [new Customer(-1, '', '', '')];
-    console.log('DATA => ', data);
+    const resCustomers: ReturningService = await customerService.get_all_customer();
+    const data: Customer[] = resCustomers.data ? (resCustomers.data as Customer[]) : [];
     setCustomers(data);
-    console.log(customers);
   };
 
   useEffect(() => {
