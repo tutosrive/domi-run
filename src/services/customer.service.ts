@@ -14,7 +14,7 @@ class CustomerService {
     this.URL = `${this.URL_API}/${this.endpoint}`;
     this.config_axios = {
       headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`,
+        Authorization: `Bearer ${import.meta.env.VITE_MS_TOKEN}`,
         Accept: 'application/json',
       },
     };

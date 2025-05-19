@@ -6,11 +6,14 @@ class AddressService {
   private readonly endpoint: string; // Endpoint to access to addresses
   private readonly URL: string; // Complete URL (URL_API + endpoint)
   private readonly config_axios; // Config to send it into axios requests
+  private readonly token: string;
   constructor() {
     this.endpoint = 'addresses';
     this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
+    this.token = sessionStorage.getItem('MS_TOKEN_CLIEND_DOMI_RUN');
     // Feature: Update to "interceptors"
-    this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
+    this.config_axios = { headers: { Authorization: `Bearer ${this.token}`, Accept: 'application/json' } };
+    console.log('CONFIG AXIOS => ', this.config_axios);
   }
 
   /**Get all data from addresses*/

@@ -7,26 +7,33 @@ import { setOpen } from '../slice/sidebar.slice';
 import { useDispatch } from 'react-redux';
 import SidebarComponent from './Sidebar.component.tsx';
 import { Link } from 'react-router-dom';
+import LogoutButtonComponent from './LogOut/LogoutButton.component.tsx';
+import { useMsal } from '@azure/msal-react';
 
 function HeaderComponent() {
   // Cahnge Type to Customer...
   const [user, setUser] = useState<User>({});
+  const { instance, accounts } = useMsal();
   // const [sidebarState, setStateSidebar] = useState({ visible: false });
   const dispatchEvent = useDispatch();
 
   useEffect(() => {
-  try {
-    const _user_localSt = sessionStorage.getItem('user_domi_run');
-    if (_user_localSt && _user_localSt !== 'undefined') {
-      const parsedUser = JSON.parse(_user_localSt);
-      setUser(parsedUser);
+    try {
+      const _user_localSt = sessionStorage.getItem('user_domi_run');
+      if (_user_localSt && _user_localSt !== 'undefined') {
+        const parsedUser = JSON.parse(_user_localSt);
+        setUser(parsedUser);
+      }
+    } catch (err) {
+      console.error('Error parsing user from sessionStorage:', err);
+      sessionStorage.removeItem('user_domi_run'); // Limpia el valor inválido
     }
-  } catch (err) {
-    console.error('Error parsing user from sessionStorage:', err);
-    sessionStorage.removeItem('user_domi_run'); // Limpia el valor inválido
-  }
-}, []);
+  }, []);
 
+  const logout = () => {
+    instance.logoutRedirect();
+    sessionStorage.removeItem('user_domi_run');
+  };
 
   const user_avatar = () => {
     // Should be a iamge... (Feature)
@@ -67,7 +74,7 @@ function HeaderComponent() {
             </div>
           </div>
           {/* View the user photo profile or SigIn button */}
-          {user.id ? (
+          {user && user.id && accounts[0] ? (
             //   Avatar with dropdown
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -80,7 +87,7 @@ function HeaderComponent() {
                   </Link>
                 </li>
                 <li>
-                  <Link>Logout</Link>
+                  <LogoutButtonComponent handleLogout={logout} />
                 </li>
               </ul>
             </div>
