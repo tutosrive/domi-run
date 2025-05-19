@@ -1,4 +1,3 @@
-// src/pages/menus/updateMenu.page.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import menuService from '../../services/menu.service';
