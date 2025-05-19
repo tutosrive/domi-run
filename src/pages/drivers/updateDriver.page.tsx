@@ -1,4 +1,3 @@
-// src/pages/drivers/updateDriver.page.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import driverService from '../../services/driver.service';

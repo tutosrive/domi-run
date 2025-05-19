@@ -22,10 +22,17 @@ const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page')
 const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
 const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
 
-const MotorcyclesPage = lazy(() => import('../pages/motorcycles/motorcycles.page'));
-const CreateMotorcyclePage = lazy(() => import('../pages/motorcycles/createMotorcycle.page'));
-const ViewMotorcyclePage = lazy(() => import('../pages/motorcycles/viewMotorcycle.page'));
-const UpdateMotorcyclePage = lazy(() => import('../pages/motorcycles/updateMotorcycle.page'));
+
+const IssuesPage = lazy(() => import('../pages/issues/issues.page'));
+const CreateIssuesPage = lazy(() => import('../pages/issues/createIssues.page'));
+const UpdateIssuesPage = lazy(() => import('../pages/issues/updateIssues.page'));
+const ViewIssuesPage = lazy(() => import('../pages/issues/viewIssues.page'));
+
+const CustomersPage = lazy(() => import('../pages/customers/customers.page'));
+const CreateCustomerPage = lazy(() => import('../pages/customers/createCustomers.page'));
+const UpdateCustomerPage = lazy(() => import('../pages/customers/updateCustomers.page'));
+const ViewCustomerPage = lazy(() => import('../pages/customers/viewCustomers.page'));
+
 
 const ShiftList = lazy(() => import('../pages/shifts/shifts.page'));
 const ShiftCreate = lazy(() => import('../pages/shifts/createShift.page'));
@@ -46,10 +53,6 @@ const routes_index: Array<object> = [
   { path: '/restaurants/update/:id', component: UpdateRestaurantPage, title: 'Update Restaurant' },
   { path: '/restaurants/view/:id', component: ViewRestaurantPage, title: 'View Restaurant' },
   { path: '/category/drinks', component: HomePage, title: 'Drinks' },
-  { path: '/customers/list', component: HomePage, title: 'List Customers' },
-  { path: '/customers/view/:id', component: HomePage, title: 'View Customer' },
-  { path: '/customers/update/:id', component: HomePage, title: 'Update Customer' },
-  { path: '/customers/create/', component: HomePage, title: 'Create Customer' },
   { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
   { path: '/statistics', component: StatisticsPage, title: 'Statistics Graphics' },
   { path: '/drivers/list',title: 'Drivers',component: DriversPage,},
@@ -64,8 +67,16 @@ const routes_index: Array<object> = [
   { path: '/shifts/create', title: 'Create Shift', component: ShiftCreate },
   { path: '/shifts/view/:id', title: 'View Shift', component: ShiftView },
   { path: '/shifts/update/:id', title: 'Update Shift', component: ShiftUpdate },
-
+  { path: '/issues/list', title: 'Issues', component: IssuesPage },
+  { path: '/issues/create', title: 'Create Issue', component: CreateIssuesPage },
+  { path: '/issues/update/:id', title: 'Update Issue', component: UpdateIssuesPage },
+  { path: '/issues/view/:id', title: 'View Issue', component: ViewIssuesPage },
+  { path: '/customers/list', title: 'Customers', component: CustomersPage },
+  { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
+  { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
+  { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
 ];
+
 
 const routers = [...routes_index];
 export default routers;
