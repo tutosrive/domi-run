@@ -22,6 +22,11 @@ const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page')
 const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
 const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
 
+const MotorcyclesPage = lazy(() => import('../pages/motorcycles/motorcycles.page'));
+const CreateMotorcyclePage = lazy(() => import('../pages/motorcycles/createMotorcycle.page'));
+const ViewMotorcyclePage = lazy(() => import('../pages/motorcycles/viewMotorcycle.page'));
+const UpdateMotorcyclePage = lazy(() => import('../pages/motorcycles/updateMotorcycle.page'));
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -45,6 +50,10 @@ const routes_index: Array<object> = [
   { path: '/drivers/create',title: 'Create Driver',component: CreateDriverPage,},
   { path: '/drivers/update/:id',title: 'Update Driver',component: UpdateDriverPage,},
   { path: '/drivers/view/:id',title: 'View Driver',component: ViewDriverPage,},
+  { path: '/motorcycles/list', component: MotorcyclesPage },
+  { path: '/motorcycles/create', component: CreateMotorcyclePage },
+  { path: '/motorcycles/view/:id', component: ViewMotorcyclePage },
+  { path: '/motorcycles/update/:id', component: UpdateMotorcyclePage },
 ];
 
 const routers = [...routes_index];
