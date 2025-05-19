@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import issueService from '../../services/issue.service';
 
@@ -25,7 +26,10 @@ export default function CreateIssuePage() {
 
     if (res.status === 200 && res.data.id) {
       await issueService.send_issue_counter(res.data.id, 'POST');
+      Swal.fire({ title: 'Success', text: 'Issue registered successfully', icon: 'success' });
       navigate('/issues/list');
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to register issue', icon: 'error' });
     }
   };
 
