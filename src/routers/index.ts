@@ -22,6 +22,16 @@ const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page')
 const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
 const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
 
+const IssuesPage = lazy(() => import('../pages/issues/issues.page'));
+const CreateIssuesPage = lazy(() => import('../pages/issues/createIssues.page'));
+const UpdateIssuesPage = lazy(() => import('../pages/issues/updateIssues.page'));
+const ViewIssuesPage = lazy(() => import('../pages/issues/viewIssues.page'));
+
+const CustomersPage = lazy(() => import('../pages/customers/customers.page'));
+const CreateCustomerPage = lazy(() => import('../pages/customers/createCustomers.page'));
+const UpdateCustomerPage = lazy(() => import('../pages/customers/updateCustomers.page'));
+const ViewCustomerPage = lazy(() => import('../pages/customers/viewCustomers.page'));
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -41,10 +51,18 @@ const routes_index: Array<object> = [
   { path: '/customers/create/', component: HomePage, title: 'Create Customer' },
   { path: '/oauth/callback', component: OAuthCallbackPage, title: 'OAuth Callback' },
   { path: '/statistics', component: StatisticsPage, title: 'Statistics Graphics' },
-  { path: '/drivers/list',title: 'Drivers',component: DriversPage,},
-  { path: '/drivers/create',title: 'Create Driver',component: CreateDriverPage,},
-  { path: '/drivers/update/:id',title: 'Update Driver',component: UpdateDriverPage,},
-  { path: '/drivers/view/:id',title: 'View Driver',component: ViewDriverPage,},
+  { path: '/drivers/list', title: 'Drivers', component: DriversPage },
+  { path: '/drivers/create', title: 'Create Driver', component: CreateDriverPage },
+  { path: '/drivers/update/:id', title: 'Update Driver', component: UpdateDriverPage },
+  { path: '/drivers/view/:id', title: 'View Driver', component: ViewDriverPage },
+  { path: '/issues/list', title: 'Issues', component: IssuesPage },
+  { path: '/issues/create', title: 'Create Issue', component: CreateIssuesPage },
+  { path: '/issues/update/:id', title: 'Update Issue', component: UpdateIssuesPage },
+  { path: '/issues/view/:id', title: 'View Issue', component: ViewIssuesPage },
+  { path: '/customers/list', title: 'Customers', component: CustomersPage },
+  { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
+  { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
+  { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
 ];
 
 const routers = [...routes_index];
