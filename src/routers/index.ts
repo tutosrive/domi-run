@@ -22,6 +22,7 @@ const CreateDriverPage = lazy(() => import('../pages/drivers/createDriver.page')
 const UpdateDriverPage = lazy(() => import('../pages/drivers/updateDriver.page'));
 const ViewDriverPage = lazy(() => import('../pages/drivers/viewDriver.page'));
 
+
 const IssuesPage = lazy(() => import('../pages/issues/issues.page'));
 const CreateIssuesPage = lazy(() => import('../pages/issues/createIssues.page'));
 const UpdateIssuesPage = lazy(() => import('../pages/issues/updateIssues.page'));
@@ -31,6 +32,7 @@ const CustomersPage = lazy(() => import('../pages/customers/customers.page'));
 const CreateCustomerPage = lazy(() => import('../pages/customers/createCustomers.page'));
 const UpdateCustomerPage = lazy(() => import('../pages/customers/updateCustomers.page'));
 const ViewCustomerPage = lazy(() => import('../pages/customers/viewCustomers.page'));
+
 
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
@@ -63,7 +65,7 @@ const routes_index: Array<object> = [
   { path: '/customers/create', title: 'Create Customer', component: CreateCustomerPage },
   { path: '/customers/update/:id', title: 'Update Customer', component: UpdateCustomerPage },
   { path: '/customers/view/:id', title: 'View Customer', component: ViewCustomerPage },
-];
+
 
 const routers = [...routes_index];
 export default routers;
