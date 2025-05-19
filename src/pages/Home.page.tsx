@@ -26,11 +26,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
       {/* Hero */}
-      <header className="bg-gradient-to-br from-blue-700 to-blue-900 py-20 px-6 text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Welcome to DomiRun</h1>
+      <header className="py-20 px-6 text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Domirun welcomes you</h1>
         <p className="text-lg max-w-2xl mx-auto text-zinc-200">
           A powerful platform for managing motorcycle deliveries. Connect restaurants, customers,
-          riders, and logistics operators through a modern and responsive interface.
+          riders, and logistics operators through a modern interface.
         </p>
       </header>
 
@@ -39,19 +39,19 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
           <FeatureCard
             title="Restaurants"
-            imageUrl="https://source.unsplash.com/400x300/?restaurant,food"
+            imageUrl="/public/restaurant.png"
           />
           <FeatureCard
             title="Customers"
-            imageUrl="https://source.unsplash.com/400x300/?customer,delivery"
+            imageUrl="/public/clients.png"
           />
           <FeatureCard
             title="Riders"
-            imageUrl="https://source.unsplash.com/400x300/?motorcycle,rider"
+            imageUrl="/public/drivers.png"
           />
           <FeatureCard
             title="Logistics"
-            imageUrl="https://source.unsplash.com/400x300/?logistics,tracking"
+            imageUrl="/public/logistic.png"
           />
         </div>
       </section>

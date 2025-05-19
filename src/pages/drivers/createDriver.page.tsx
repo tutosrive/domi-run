@@ -1,43 +1,49 @@
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import driverService from '../../services/driver.service';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import motorcycleService from '../../services/motorcycle.service';
+import Motorcycle from '../../models/Motorcycle.model';
 
-export default function CreateDriverPage() {
-  const navigate = useNavigate();
-
-  const validationSchema = Yup.object({
-    name: Yup.string().min(3, 'Mínimo 3 caracteres').required('Nombre requerido'),
-    license_number: Yup.string().matches(/^[0-9]+$/, 'Solo números').min(5, 'Mínimo 5 dígitos').required('Número de licencia requerido'),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, 'Solo números')
-      .min(7, 'Mínimo 7 dígitos')
-      .required('Teléfono requerido'),
-    email: Yup.string().email('Correo inválido').required('Correo requerido'),
-    status: Yup.string().required('Estado requerido'),
+export default function CreateMotorcyclePage() {
+  const [form, setForm] = useState<Omit<Motorcycle, 'id'>>({
+    license_plate: '',
+    brand: '',
+    year: new Date().getFullYear(),
+    status: '',
   });
 
-  const initialValues = {
-    name: '',
-    license_number: '',
-    phone: '',
-    email: '',
-    status: '',
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: name === 'year' ? parseInt(value) : value,
+    });
   };
 
-  const handleSubmit = async (values: typeof initialValues) => {
-    const response = await driverService.post_driver(values);
+  const handleSubmit = async () => {
+    if (!form.license_plate || !form.brand || !form.year || !form.status) {
+      Swal.fire({ title: 'Error', text: 'Todos los campos son obligatorios.', icon: 'warning' });
+      return;
+    }
+
+    const response = await motorcycleService.post_motorcycle(form);
     if (response.status === 200 || response.status === 201) {
-      await driverService.send_driver_counter(response.data.id, { delta: 0 });
-      Swal.fire({ title: 'Éxito', text: 'Conductor creado exitosamente', icon: 'success' });
-      navigate('/drivers/list');
+      Swal.fire({ title: 'Éxito', text: 'Motocicleta creada correctamente.', icon: 'success' });
+      navigate('/motorcycles/list');
     } else {
-      Swal.fire({ title: 'Error', text: 'No se pudo crear el conductor', icon: 'error' });
+      Swal.fire({ title: 'Error', text: 'Error al crear la motocicleta.', icon: 'error' });
     }
   };
 
   return (
+    <div className="container mx-auto max-w-md p-4">
+      <h1 className="text-xl font-semibold mb-4">Crear Moto</h1>
+      <input name="license_plate" placeholder="Placa" onChange={handleChange} className="input mb-2 w-full" />
+      <input name="brand" placeholder="Marca" onChange={handleChange} className="input mb-2 w-full" />
+      <input type="number" name="year" placeholder="Año" onChange={handleChange} className="input mb-2 w-full" />
+      <input name="status" placeholder="Estado" onChange={handleChange} className="input mb-2 w-full" />
+      <button className="btn w-full" onClick={handleSubmit}>Guardar</button>
+
     <div className="max-w-lg mx-auto mt-10 space-y-4">
       <h2 className="text-xl font-bold text-center">Crear nuevo conductor</h2>
 
