@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+// src/pages/menus/createMenu.page.tsx
+import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import menuService from '../../services/menu.service';
 import productService from '../../services/product.service';
@@ -50,6 +52,14 @@ export default function CreateMenuPage() {
   };
 
   const handleSubmit = async () => {
+
+    const res = await menuService.create(formData);
+    if (res.status === 200 || res.status === 201) {
+      Swal.fire({ title: 'Success', text: 'Menu created successfully', icon: 'success' });
+      navigate(`/restaurants/view/${id}`);
+    } else {
+      Swal.fire({ title: 'Error', text: 'Failed to create menu', icon: 'error' });
+
     let productId = formData.product_id;
 
     if (createNewProduct) {
@@ -68,6 +78,7 @@ export default function CreateMenuPage() {
       navigate(`/restaurants/view/${id}`);
     } else {
       alert('Error al crear menú');
+
     }
   };
 

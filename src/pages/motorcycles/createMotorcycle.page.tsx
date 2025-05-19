@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import motorcycleService from '../../services/motorcycle.service';
 import Motorcycle from '../../models/Motorcycle.model';

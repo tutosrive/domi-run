@@ -6,10 +6,14 @@ import { Button } from 'primereact/button';
 import { setOpen } from '../slice/sidebar.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import SidebarComponent from './Sidebar.component.tsx';
+
+import LogoutButtonComponent from './LogOut/LogoutButton.component.tsx';
+import { useMsal } from '@azure/msal-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function HeaderComponent() {
   const [user, setUser] = useState<User>({});
+  const { instance, accounts } = useMsal();
   const dispatchEvent = useDispatch();
   const navigate = useNavigate();
 
@@ -28,9 +32,14 @@ function HeaderComponent() {
       }
     } catch (err) {
       console.error('Error parsing user from sessionStorage:', err);
-      sessionStorage.removeItem('user_domi_run');
+      sessionStorage.removeItem('user_domi_run'); // Limpia el valor inválido
     }
   }, []);
+
+  const logout = () => {
+    instance.logoutRedirect();
+    sessionStorage.removeItem('user_domi_run');
+  };
 
   const user_avatar = () => {
     return (
@@ -103,9 +112,9 @@ function HeaderComponent() {
               </div>
             </div>
           </div>
-
-          {/* User avatar / SignIn */}
-          {user.id ? (
+          {/* View the user photo profile or SigIn button */}
+          {user && user.id && accounts[0] ? (
+            //   Avatar with dropdown
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">{user_avatar()}</div>
@@ -120,7 +129,7 @@ function HeaderComponent() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">Logout</Link>
+                  <LogoutButtonComponent handleLogout={logout} />
                 </li>
               </ul>
             </div>

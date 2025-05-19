@@ -9,7 +9,8 @@ class MotorcycleService {
   constructor() {
     this.endpoint = 'motorcycles';
     this.URL = `${import.meta.env.VITE_URL_API}/${this.endpoint}`;
-    this.config_axios = { headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_TEST}`, Accept: 'application/json' } };
+    this.token = sessionStorage.getItem('MS_TOKEN_CLIEND_DOMI_RUN');
+    this.config_axios = { headers: { Authorization: `Bearer ${this.token}`, Accept: 'application/json' } };
   }
 
   /**Get all data from motorcycles*/
@@ -37,7 +38,7 @@ class MotorcycleService {
    * Send data to the backend
    * @param motorcycle - motorcycle The Motorcycle to send to the backend.
    */
-  async post_motorcycle(motorcycle: Omit<Motorcycle, id>): Promise<ReturningService> {
+  async post_motorcycle(motorcycle: Motorcycle): Promise<ReturningService> {
     try {
       const __config = { headers: { ['Content-Type']: 'application/json' } };
       // Set headers by default from config_headers
