@@ -1,4 +1,3 @@
-// src/pages/issues/viewIssue.page.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import issueService from '../../services/issue.service';
