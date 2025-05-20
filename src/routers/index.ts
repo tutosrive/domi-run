@@ -68,11 +68,6 @@ const routes_index: Array<object> = [
   { path: '/restaurants/create', title: 'Create Restaurant', component: CreateRestaurantPage },
   { path: '/restaurants/update/:id', title: 'Update Restaurant', component: UpdateRestaurantPage },
   { path: '/restaurants/view/:id', title: 'View Restaurant', component: ViewRestaurantPage },
-  { path: '/category/drinks', component: HomePage, title: 'Drinks' },
-  { path: '/restaurants/list/', component: RestaurantsPage, title: 'Restaurants' },
-  { path: '/restaurants/create', component: CreateRestaurantPage, title: 'Restaurants' },
-  { path: '/restaurants/update/:id', component: UpdateRestaurantPage, title: 'Update Restaurant' },
-  { path: '/restaurants/view/:id', component: ViewRestaurantPage, title: 'View Restaurant' },
   { path: '/products/category/:category', component: ProductsPage, title: 'Products' },
   { path: '/products/create', component: createProductPage, title: 'Create Product' },
   { path: '/products/update/:id', component: updateProductPage, title: 'Update Product' },
@@ -104,8 +99,7 @@ const routes_index: Array<object> = [
   { path: '/menus/view/:id', title: 'Ver Menú', component: ViewMenuPage },
   { path: '/menus/update/:id', title: 'Actualizar Menú', component: UpdateMenuPage },
   { path: '/menus/create/:id', title: 'Crear menú', component: CreateMenuPage },
-  { path: '/cart', component: CartPage, title: 'Carrito' }
-
+  { path: '/cart', component: CartPage, title: 'Carrito' },
 ];
 
 const routers = [...routes_index];
