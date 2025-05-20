@@ -55,6 +55,8 @@ const viewProductPage = lazy(() => import('../pages/products/viewProducts.page')
 
 const CartPage = lazy(() => import('../pages/cart/cart.page'));
 
+const MapTracker = lazy(() => import('../pages/Map.page'));
+
 const routes_index: Array<object> = [
   { path: '/addresses/list/', title: 'Addresses', component: ListAddresses },
   { path: '/addresses/view/:id', title: 'Addresses', component: ViewAddressesPage },
@@ -99,6 +101,7 @@ const routes_index: Array<object> = [
   { path: '/menus/update/:id', title: 'Actualizar Menú', component: UpdateMenuPage },
   { path: '/menus/create/:id', title: 'Crear menú', component: CreateMenuPage },
   { path: '/cart', component: CartPage, title: 'Carrito' },
+  { path: '/map/:PLATE', component: MapTracker, title: 'Map Track' },
 ];
 
 const routers = [...routes_index];
