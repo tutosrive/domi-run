@@ -12,8 +12,9 @@ export default function BarChart2Component() {
   const [data, setData] = useState<BarData[] | null>(null);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/barChartData')  // Cambiar por tu endpoint mock real
-      .then(res => setData(res.data))
+    axios
+      .get('http://localhost:4000/barChartData') // Cambiar por tu endpoint mock real
+      .then((res) => setData(res.data))
       .catch(() => setData([]));
   }, []);
 
@@ -25,16 +26,18 @@ export default function BarChart2Component() {
     );
   }
 
-  const series = [{
-    name: 'Values',
-    data: data.map(item => item.value),
-  }];
+  const series = [
+    {
+      name: 'Values',
+      data: data.map((item) => item.value),
+    },
+  ];
 
   const options = {
     chart: { type: 'bar', toolbar: { show: true }, foreColor: '#fff' },
-    xaxis: { categories: data.map(item => item.label) },
+    xaxis: { categories: data.map((item) => item.label) },
     dataLabels: { enabled: true },
-    theme: { mode: 'dark' },
+    tooltip: { theme: 'dark' },
   };
 
   return <Chart options={options} series={series} type="bar" height={300} />;

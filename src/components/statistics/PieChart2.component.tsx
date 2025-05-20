@@ -12,8 +12,9 @@ export default function PieChart2Component() {
   const [data, setData] = useState<PieData[] | null>(null);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/pieChartData')  // Cambiar por tu endpoint mock real
-      .then(res => setData(res.data))
+    axios
+      .get('http://localhost:4000/pieChartData') // Cambiar por tu endpoint mock real
+      .then((res) => setData(res.data))
       .catch(() => setData([]));
   }, []);
 
@@ -25,14 +26,16 @@ export default function PieChart2Component() {
     );
   }
 
-  const series = data.map(item => item.count);
-  const labels = data.map(item => item.category);
+  const series = data.map((item) => item.count);
+  const labels = data.map((item) => item.category);
 
   const options = {
     labels,
     legend: { position: 'bottom', labels: { colors: '#fff' } },
     dataLabels: { enabled: true, style: { colors: ['#fff'] } },
-    theme: { mode: 'dark' },
+    chart: {
+      toolbar: { show: true },
+    },
   };
 
   return <Chart options={options} series={series} type="pie" height={300} />;

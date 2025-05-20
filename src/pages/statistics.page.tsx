@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DriverMonthStatisticComponent from '../components/statistics/driverMonthStatistic.component';
+import DriverMostWantedMonth from '../components/statistics/driverMonthStatistic.component';
 import RowStatisticComponent from '../components/statistics/RowStatisticComponent';
 import MonthMostOrdersStatisticComponent from '../components/statistics/monthMostOrdersStatistic.component';
 import UserHistoryStatisticComponent from '../components/statistics/usersRegisteredHistoryStatistic.component';
@@ -14,20 +14,9 @@ import SeriesChart1Component from '../components/statistics/SeriesChart1.compone
 import SeriesChart2Component from '../components/statistics/SeriesChart2.component';
 
 export default function StatisticsPage() {
-  const templateCardGraph = ({
-    title,
-    component,
-    count,
-  }: {
-    title: string;
-    component: React.ReactNode;
-    count: number;
-  }) => {
+  const templateCardGraph = ({ title, component, count }: { title: string; component: React.ReactNode; count: number }) => {
     return (
-      <div
-        key={`gp-${count}-ctn`}
-        className="w-full h-full bg-white dark:bg-gray-800 rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5"
-      >
+      <div key={`gp-${count}-ctn`} className="w-full h-full bg-white dark:bg-gray-800 rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5">
         <div key={`gp-${count}-ctn-body`}>
           <h3 key={`gp-${count}-h3`} className="mb-1 text-center font-semibold text-lg">
             {title}
@@ -42,7 +31,7 @@ export default function StatisticsPage() {
   const graphPieSRM = () =>
     templateCardGraph({
       title: 'Driver Monthly Statistics (Pie)',
-      component: <DriverMonthStatisticComponent />,
+      component: <DriverMostWantedMonth />,
       count: 1,
     });
 
@@ -106,17 +95,7 @@ export default function StatisticsPage() {
   return (
     <>
       <RowStatisticComponent
-        children={[
-          graphPieSRM(),
-          graphBarsSRM(),
-          graphTemporarySRM(),
-          graphPie1(),
-          graphPie2(),
-          graphBar1(),
-          graphBar2(),
-          graphSeries1(),
-          graphSeries2(),
-        ]}
+        children={[graphPieSRM(), graphBarsSRM(), graphTemporarySRM(), graphPie1(), graphPie2(), graphBar1(), graphBar2(), graphSeries1(), graphSeries2()]}
         title={
           <span>
             Statistics <strong>Domi Run</strong>

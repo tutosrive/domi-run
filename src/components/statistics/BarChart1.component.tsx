@@ -12,7 +12,8 @@ export default function BarChart1Component() {
   const [data, setData] = useState<BarData[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/barStats')
+    axios
+      .get('http://localhost:4000/barStats')
       .then((res) => {
         if (res.status === 200) {
           setData(res.data);
@@ -27,11 +28,11 @@ export default function BarChart1Component() {
     chart: {
       id: 'bar-chart-different',
       type: 'bar',
-      toolbar: { show: false },
-      foreColor: '#444',
+      toolbar: { show: true },
+      foreColor: 'white',
     },
     xaxis: {
-      categories: data.map(d => d.category),
+      categories: data.map((d) => d.category),
       title: { text: 'Category' },
     },
     yaxis: {
@@ -49,25 +50,24 @@ export default function BarChart1Component() {
     dataLabels: {
       enabled: true,
       style: {
-        colors: ['#333'],
+        colors: ['white'],
       },
     },
     title: {
       text: 'Count per Category (Bar Chart)',
       align: 'center',
     },
+    tooltip: {
+      theme: 'dark',
+    },
   };
 
   const series = [
     {
       name: 'Count',
-      data: data.map(d => d.count),
+      data: data.map((d) => d.count),
     },
   ];
 
-  return (
-    <div>
-      <Chart options={options} series={series} type="bar" height={320} />
-    </div>
-  );
+  return <Chart options={options} series={series} type="bar" height={320} />;
 }

@@ -80,33 +80,26 @@ class OrderService {
   }
   async get_order_month_most_wanted(): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<Order> = await axios.get<Order>(`${this.URL_API}/stats/${this.endpoint}/months`, this.config_axios);
+      const req: AxiosResponse<Order> = await axios.get<Order>('http://localhost:4000/mostOrderByMonth', this.config_axios);
       return new ReturningService(req.status, req.data ?? {});
     } catch (e) {
       return new ReturningService(500, {}, e);
     }
   }
-  async create_order(data: {
-  customer_id: number;
-  menu_id: number;
-  motorcycle_id: number;
-  quantity: number;
-  total_price: number;
-  status: string;
-}): Promise<ReturningService> {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...this.config_axios.headers,
-      },
-    };
-    const res: AxiosResponse<Order> = await axios.post(this.URL, data, config);
-    return new ReturningService(res.status, res.data);
-  } catch (e) {
-    return new ReturningService(500, {}, e);
+  async create_order(data: { customer_id: number; menu_id: number; motorcycle_id: number; quantity: number; total_price: number; status: string }): Promise<ReturningService> {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...this.config_axios.headers,
+        },
+      };
+      const res: AxiosResponse<Order> = await axios.post(this.URL, data, config);
+      return new ReturningService(res.status, res.data);
+    } catch (e) {
+      return new ReturningService(500, {}, e);
+    }
   }
-}
 }
 
 const orderService = new OrderService();
