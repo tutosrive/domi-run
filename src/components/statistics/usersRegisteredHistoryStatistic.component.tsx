@@ -81,17 +81,6 @@ export default function UserHistoryStatisticComponent() {
     yaxis: {
       title: { text: 'Registrations' },
     },
-    title: {
-      text: 'Monthly User Registrations (Historical Trend)',
-      align: 'center',
-      margin: 20,
-      offsetY: 0,
-      style: {
-        fontSize: '18px',
-        fontWeight: 'bold',
-        color: 'white',
-      },
-    },
   };
 
   const chartSeries = [

@@ -44,7 +44,7 @@ export default function StatisticsPage() {
 
   const graphTemporarySRM = () =>
     templateCardGraph({
-      title: 'User Registrations History',
+      title: 'Monthly User Registrations (Historical Trend)',
       component: <UserHistoryStatisticComponent />,
       count: 3,
     });
@@ -52,14 +52,14 @@ export default function StatisticsPage() {
   // 6 nuevas gráficas
   const graphPie1 = () =>
     templateCardGraph({
-      title: 'Pie Chart 1 - Roles Distribution',
+      title: 'Pie Chart 1 - Categories',
       component: <PieChart1Component />,
       count: 4,
     });
 
   const graphPie2 = () =>
     templateCardGraph({
-      title: 'Pie Chart 2 - Animal Preferences',
+      title: 'Pie Chart 2 -Most Popular restaurants',
       component: <PieChart2Component />,
       count: 5,
     });
@@ -95,7 +95,7 @@ export default function StatisticsPage() {
   return (
     <>
       <RowStatisticComponent
-        children={[graphPieSRM(), graphBarsSRM(), graphTemporarySRM(), graphPie1(), graphPie2(), graphBar1(), graphBar2(), graphSeries1(), graphSeries2()]}
+        children={[graphSeries1(), graphPieSRM(), graphBar2(), graphTemporarySRM(), graphPie1(), graphBarsSRM(), graphPie2(), graphBar1(), graphSeries2()]}
         title={
           <span>
             Statistics <strong>Domi Run</strong>
