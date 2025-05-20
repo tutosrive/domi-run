@@ -1,53 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import type { ApexOptions } from 'apexcharts';
 import axios from 'axios';
+import LoaderPointsComponent from '../LoaderPoints.component';
 
 interface PieData {
-  label: string;
-  value: number;
+  category: string;
+  count: number;
 }
 
 export default function PieChart1Component() {
-  const [data, setData] = useState<PieData[]>([]);
+  const [data, setData] = useState<PieData[] | null>(null);
 
   useEffect(() => {
-    // Llamada al mock server para obtener datos para la gráfica de torta
-    axios.get('http://localhost:4000/circularStats')
-      .then((res) => {
-        if (res.status === 200) {
-          setData(res.data);
-        }
-      })
-      .catch(() => {
-        setData([]);
-      });
+    axios.get('http://localhost:4000/pieChartData2')  // Cambiar por tu endpoint mock real
+      .then(res => setData(res.data))
+      .catch(() => setData([]));
   }, []);
 
-  const options: ApexOptions = {
-    labels: data.map((d) => d.label),
-    legend: {
-      position: 'bottom',
-    },
-    title: {
-      text: 'Distribution by Category',
-      align: 'center',
-    },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          legend: { position: 'bottom' },
-        },
-      },
-    ],
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center w-full h-64">
+        <LoaderPointsComponent />
+      </div>
+    );
+  }
+
+  const series = data.map(item => item.count);
+  const labels = data.map(item => item.category);
+
+  const options = {
+    labels,
+    legend: { position: 'bottom', labels: { colors: '#333' } },
+    dataLabels: { enabled: true, style: { colors: ['#444'] } },
+    theme: { mode: 'dark' },
+     colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
   };
 
-  const series = data.map((d) => d.value);
-
-  return (
-    <div>
-      <Chart options={options} series={series} type="pie" height={300} />
-    </div>
-  );
+  return <Chart options={options} series={series} type="pie" height={300} />;
 }
