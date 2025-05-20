@@ -16,9 +16,14 @@
     { "category": "Books", "count": 45 }
   ],
   "pieChartData": [
-    { "category": "Dogs", "count": 40 },
-    { "category": "Cats", "count": 35 },
-    { "category": "Birds", "count": 25 }
+    { "category": "restaurante vivo", "count": 40 },
+    { "category": "restaurante milan", "count": 35 },
+    { "category": "restaurante pro", "count": 25 }
+  ],
+  "pieChartData2": [
+    { "category": "bebidas", "count": 50 },
+    { "category": "postre", "count": 40 },
+    { "category": "dulces", "count": 10 }
   ],
   "barChartData": [
     { "label": "Q1", "value": 100 },
@@ -31,5 +36,11 @@
     { "month": "February", "deliveries": 70 },
     { "month": "March", "deliveries": 110 },
     { "month": "April", "deliveries": 95 }
+  ],
+  "deliveriesStats2": [
+    { "month": "January", "deliveries": 201},
+    { "month": "February", "deliveries": 200 },
+    { "month": "March", "deliveries": 110 },
+    { "month": "April", "deliveries": 200 }
   ]
 }

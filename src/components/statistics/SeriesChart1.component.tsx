@@ -3,61 +3,78 @@ import Chart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
 import axios from 'axios';
 
-interface DataPoint {
+interface DeliveryData {
   month: string;
-  sales: number;
+  deliveries: number;
 }
 
 export default function SeriesChart1Component() {
-  const [data, setData] = useState<DataPoint[]>([]);
+  const [data, setData] = useState<DeliveryData[]>([]);
 
   useEffect(() => {
-    // Aquí llamamos al mock server para obtener datos de series temporales
-    axios.get('http://localhost:4000/userRegistrations')
-      .then((res) => {
-        if (res.status === 200) {
+    // Podrías agregar este array en mock/db.json, o simularlo localmente
+    // Por ejemplo, si quieres usar mock:
+    axios.get('http://localhost:4000/deliveriesStats2')
+      .then(res => {
+        if(res.status === 200){
           setData(res.data);
         }
       })
       .catch(() => {
-        setData([]);
+        // fallback: datos estáticos temporales para demo
+        setData([
+          { month: 'January', deliveries: 200},
+          { month: 'February', deliveries: 100 },
+          { month: 'March', deliveries: 110 },
+          { month: 'April', deliveries: 43},
+        ]);
       });
   }, []);
 
   const options: ApexOptions = {
     chart: {
-      id: 'series-chart',
-      type: 'line',
+      id: 'series-chart-different',
+      type: 'area',
       zoom: { enabled: false },
       foreColor: '#333',
     },
+    colors: [ '#FF6347'],
     xaxis: {
-      categories: data.map((d) => d.month),
+      categories: data.map(d => d.month),
       title: { text: 'Month' },
     },
     yaxis: {
-      title: { text: 'Sales' },
+      title: { text: 'Deliveries' },
     },
     stroke: {
       curve: 'smooth',
     },
     dataLabels: { enabled: false },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 0.7,
+        opacityFrom: 0.7,
+        opacityTo: 0.2,
+        stops: [0, 90, 100],
+      },
+    },
     title: {
-      text: 'Monthly Sales Series',
+      text: 'Monthly Deliveries (Area Chart)',
       align: 'center',
     },
   };
 
   const series = [
     {
-      name: 'Sales',
-      data: data.map((d) => d.sales),
+      name: 'Deliveries',
+      data: data.map(d => d.deliveries),
     },
   ];
 
   return (
     <div>
-      <Chart options={options} series={series} type="line" height={300} />
+      <Chart options={options} series={series} type="area" height={320} />
     </div>
   );
 }
