@@ -90,7 +90,7 @@ export default function UpdateCustomerPage() {
               value={formik.values[key]}
               onChange={key === 'phone' ? handlePhoneChange : formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border px-3 py-2 rounded ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+              className={`w-full border px-3 py-2 rounded ${disabled ? 'bg-gray-600 cursor-not-allowed' : ''}`}
             />
             {formik.touched[key] && formik.errors[key] && <div className="text-red-500 text-sm mt-1">{formik.errors[key]}</div>}
           </div>
@@ -98,11 +98,11 @@ export default function UpdateCustomerPage() {
 
         <div className="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6">
           <button type="button" onClick={() => navigate(-1)} className="p-ripple orange-ripple bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded w-full sm:w-auto">
-            Volver
+            Back
             <Ripple />
           </button>
           <button type="submit" className="p-ripple orange-ripple bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full sm:w-auto">
-            Actualizar
+            Update
             <Ripple />
           </button>
         </div>
