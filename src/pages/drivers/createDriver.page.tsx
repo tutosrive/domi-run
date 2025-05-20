@@ -1,82 +1,109 @@
+import { Ripple } from 'primereact/ripple';
+
+import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import motorcycleService from '../../services/motorcycle.service';
-import Motorcycle from '../../models/Motorcycle.model';
+import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+import driverService from '../../services/driver.service';
+import Driver from '../../models/Driver.model';
 
-export default function CreateMotorcyclePage() {
-  const [form, setForm] = useState<Omit<Motorcycle, 'id'>>({
-    license_plate: '',
-    brand: '',
-    year: new Date().getFullYear(),
-    status: '',
-  });
-
+export default function CreateDriverPage() {
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: name === 'year' ? parseInt(value) : value,
-    });
+  // Validation schema with international phone and alphanumeric license
+  const validationSchema = Yup.object({
+    name: Yup.string().min(3, 'Minimum 3 characters').required('Name is required'),
+    license_number: Yup.string()
+      .matches(/^[A-Za-z0-9]+$/, 'Letters and numbers only')
+      .min(5, 'Minimum 5 characters')
+      .required('License number is required'),
+    phone: Yup.string()
+      .matches(/^\+?[0-9]{7,15}$/, 'Invalid phone format (e.g., +57123456789)')
+      .required('Phone is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    status: Yup.string().required('Status is required'),
+  });
+
+  // Custom phone number handler
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    // Allow only numbers and +
+    value = value.replace(/[^0-9+]/g, '');
+    // Ensure only one + at the beginning
+    if ((value.match(/\+/g) || []).length > 1) {
+      value = '+' + value.replace(/\+/g, '');
+    }
+    formik.setFieldValue('phone', value);
   };
 
-  const handleSubmit = async () => {
-    if (!form.license_plate || !form.brand || !form.year || !form.status) {
-      Swal.fire({ title: 'Error', text: 'Todos los campos son obligatorios.', icon: 'warning' });
-      return;
-    }
+  const formik = useFormik<Driver>({
+    initialValues: {
+      name: '',
+      license_number: '',
+      phone: '',
+      email: '',
+      status: '',
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const res = await driverService.post_driver(values);
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: 'Success',
+            text: 'Driver created successfully',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate('/drivers/list');
+        }
+      } catch (error) {
+        console.warn(error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to create driver',
+          icon: 'error',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    },
+  });
 
-    const response = await motorcycleService.post_motorcycle(form);
-    if (response.status === 200 || response.status === 201) {
-      Swal.fire({ title: 'Éxito', text: 'Motocicleta creada correctamente.', icon: 'success' });
-      navigate('/motorcycles/list');
-    } else {
-      Swal.fire({ title: 'Error', text: 'Error al crear la motocicleta.', icon: 'error' });
-    }
-  };
+  const driverFields: (keyof Driver)[] = ['name', 'license_number', 'phone', 'email', 'status'];
 
   return (
-    <div className="container mx-auto max-w-md p-4">
-      <h1 className="text-xl font-semibold mb-4">Crear Moto</h1>
-      <input name="license_plate" placeholder="Placa" onChange={handleChange} className="input mb-2 w-full" />
-      <input name="brand" placeholder="Marca" onChange={handleChange} className="input mb-2 w-full" />
-      <input type="number" name="year" placeholder="Año" onChange={handleChange} className="input mb-2 w-full" />
-      <input name="status" placeholder="Estado" onChange={handleChange} className="input mb-2 w-full" />
-      <button className="btn w-full" onClick={handleSubmit}>Guardar</button>
-
     <div className="max-w-lg mx-auto mt-10 space-y-4">
-      <h2 className="text-xl font-bold text-center">Crear nuevo conductor</h2>
+      <h2 className="text-xl font-bold text-center">Create New Driver</h2>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form className="space-y-4">
-          {['name', 'license_number', 'phone', 'email', 'status'].map((field) => (
-            <div key={field}>
-              <Field
-                type="text"
-                name={field}
-                placeholder={field}
-                className="w-full border px-3 py-2 rounded"
-              />
-              <ErrorMessage
-                name={field}
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
-          ))}
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
+        {driverFields.map((field) => (
+          <div key={field}>
+            <input
+              type="text"
+              name={field}
+              value={formik.values[field]}
+              onChange={field === 'phone' ? handlePhoneChange : formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder={field === 'phone' ? 'Phone (e.g., +57123456789)' : field === 'license_number' ? 'License Number (letters & numbers)' : field.replace('_', ' ').toUpperCase()}
+              className="w-full border px-3 py-2 rounded"
+            />
+            {formik.touched[field] && formik.errors[field] && <p className="text-red-500 text-sm mt-1">{formik.errors[field]}</p>}
+          </div>
+        ))}
 
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full"
-          >
-            Crear
+        <div className="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6">
+          <button type="button" onClick={() => navigate(-1)} className="p-ripple orange-ripple bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+            Back
+            <Ripple />
           </button>
-        </Form>
-      </Formik>
+          <button type="submit" className="p-ripple orange-ripple bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+            Create Driver
+            <Ripple />
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

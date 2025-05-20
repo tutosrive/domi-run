@@ -34,7 +34,7 @@ class CustomerService {
   async post_customer(customer: Customer): Promise<ReturningService> {
     try {
       const req: AxiosResponse<Customer> = await api.post<Customer>(this.URL, customer, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
       return new ReturningService(req.status, req.data);
     } catch (e) {
@@ -62,8 +62,8 @@ class CustomerService {
 
   async get_history_customers_register(): Promise<ReturningService> {
     try {
-      const req: AxiosResponse<{ month: string; registrations: number }> =
-        await api.get(`${this.URL_API}/stats/${this.endpoint}/registration-history`);
+      // Data from mock server
+      const req: AxiosResponse<{ month: string; registrations: number }> = await api.get('http://localhost:4000/userRegistrations');
       return new ReturningService(req.status, req.data || {});
     } catch (e) {
       return new ReturningService(500, {}, e);

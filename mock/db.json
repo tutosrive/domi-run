@@ -3,7 +3,10 @@
     { "month": "January", "registrations": 120 },
     { "month": "February", "registrations": 80 },
     { "month": "March", "registrations": 100 },
-    { "month": "April", "registrations": 130 }
+    { "month": "April", "registrations": 130 },
+    { "month": "May", "registrations": 30 },
+    { "month": "June", "registrations": 170 },
+    { "month": "July", "registrations": 20 }
   ],
   "circularStats": [
     { "label": "Admin", "value": 30 },
