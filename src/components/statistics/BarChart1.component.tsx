@@ -53,10 +53,6 @@ export default function BarChart1Component() {
         colors: ['white'],
       },
     },
-    title: {
-      text: 'Count per Category (Bar Chart)',
-      align: 'center',
-    },
     tooltip: {
       theme: 'dark',
     },

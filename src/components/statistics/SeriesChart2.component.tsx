@@ -60,10 +60,6 @@ export default function SeriesChart2Component() {
         stops: [0, 90, 100],
       },
     },
-    title: {
-      text: 'Monthly Deliveries (Area Chart)',
-      align: 'center',
-    },
   };
 
   const series = [

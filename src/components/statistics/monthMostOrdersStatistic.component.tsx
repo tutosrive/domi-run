@@ -50,7 +50,6 @@ const MonthMostOrdersStatisticComponent: React.FC = () => {
             },
           },
           title: {
-            text: 'Meses con más pedidos',
             align: 'center',
             style: {
               fontSize: '20px',
@@ -83,7 +82,7 @@ const MonthMostOrdersStatisticComponent: React.FC = () => {
           },
           yaxis: {
             title: {
-              text: 'Número de pedidos',
+              text: 'Number of orders',
               style: {
                 color: '#ffffff',
               },
