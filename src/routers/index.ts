@@ -1,4 +1,3 @@
-import path from 'path';
 import { lazy } from 'react';
 
 const ListAddresses = lazy(() => import('../pages/address/addresses.page'));
