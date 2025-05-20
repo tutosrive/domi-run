@@ -34,31 +34,23 @@ function SidebarComponent() {
           <Ripple />
         </Link>
 
-       {/* Navigate to the 'Drivers' page */}
-          <Link
-            className={'btn w-full mb-2 p-ripple orange-ripple'}
-            to={'/drivers/list'}
-            onClick={() => dispatchEvent(setClose())}
-          >
-            <i className={'pi pi-truck'} /> Drivers
-            <Ripple />
-          </Link>
-          <Link
-            className="btn w-full mb-2 p-ripple orange-ripple"
-            to="/motorcycles/list"
-            onClick={() => dispatchEvent(setClose())}
-          >
-            <i className="pi pi-car" /> Motorcycles
-            <Ripple />
-          </Link>
-        <Link
-        className={'btn w-full mb-2 p-ripple orange-ripple'}
-        to={'/shifts/list'}
-        onClick={() => dispatchEvent(setClose())}
-      >
-        <i className="pi pi-clock" /> Shifts
-        <Ripple />
-      </Link>
+        {/* Navigate to the 'Drivers' page */}
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/drivers/list'} onClick={() => dispatchEvent(setClose())}>
+          <i className={'pi pi-truck'} /> Drivers
+          <Ripple />
+        </Link>
+        <Link className="btn w-full mb-2 p-ripple orange-ripple" to="/motorcycles/list" onClick={() => dispatchEvent(setClose())}>
+          <i className="pi pi-car" /> Motorcycles
+          <Ripple />
+        </Link>
+        <Link className="btn w-full mb-2 p-ripple orange-ripple" to="/addresses/list" onClick={() => dispatchEvent(setClose())}>
+          <i className="pi pi-map-marker" /> Addresses
+          <Ripple />
+        </Link>
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/shifts/list'} onClick={() => dispatchEvent(setClose())}>
+          <i className="pi pi-clock" /> Shifts
+          <Ripple />
+        </Link>
         {/* Navigate to the 'Statistics' page */}
         <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/issues/list'} onClick={() => dispatchEvent(setClose())}>
           <i className={'pi pi-exclamation-triangle'} /> Issues
@@ -69,11 +61,7 @@ function SidebarComponent() {
           <i className={'pi pi-users'} /> Customers
           <Ripple />
         </Link>
-        <Link
-          className={'btn w-full mb-2 p-ripple orange-ripple'}
-          to={'/menus'}
-          onClick={() => dispatchEvent(setClose())}
-        >
+        <Link className={'btn w-full mb-2 p-ripple orange-ripple'} to={'/menus'} onClick={() => dispatchEvent(setClose())}>
           <i className={'pi pi-list'} /> Menús
           <Ripple />
         </Link>
