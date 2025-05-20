@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock-server": "json-server --watch mock/db.json --port 4000"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.30.0",
@@ -59,6 +60,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "file-loader": "^6.2.0",
     "globals": "^16.0.0",
+    "json-server": "^1.0.0-beta.3",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.5.6",

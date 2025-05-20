@@ -1,0 +1,35 @@
+{
+  "userRegistrations": [
+    { "month": "January", "registrations": 120 },
+    { "month": "February", "registrations": 80 },
+    { "month": "March", "registrations": 100 },
+    { "month": "April", "registrations": 130 }
+  ],
+  "circularStats": [
+    { "label": "Admin", "value": 30 },
+    { "label": "User", "value": 60 },
+    { "label": "Guest", "value": 10 }
+  ],
+  "barStats": [
+    { "category": "Electronics", "count": 120 },
+    { "category": "Clothing", "count": 80 },
+    { "category": "Books", "count": 45 }
+  ],
+  "pieChartData": [
+    { "category": "Dogs", "count": 40 },
+    { "category": "Cats", "count": 35 },
+    { "category": "Birds", "count": 25 }
+  ],
+  "barChartData": [
+    { "label": "Q1", "value": 100 },
+    { "label": "Q2", "value": 150 },
+    { "label": "Q3", "value": 130 },
+    { "label": "Q4", "value": 170 }
+  ],
+  "deliveriesStats": [
+    { "month": "January", "deliveries": 90 },
+    { "month": "February", "deliveries": 70 },
+    { "month": "March", "deliveries": 110 },
+    { "month": "April", "deliveries": 95 }
+  ]
+}
