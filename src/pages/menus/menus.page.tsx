@@ -45,8 +45,8 @@ export default function MenusPage() {
             navigation={{
               navigate,
               urls: {
-                update: '/menu/update',
-                view: '/menu/view',
+                update: '/menus/update',
+                view: '/menus/view',
                 // Nota: No se permite crear desde esta página
               },
             }}
