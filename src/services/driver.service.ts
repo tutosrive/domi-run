@@ -70,7 +70,7 @@ class DriverService {
 
   async get_driver_counter(): Promise<ReturningService> {
     try {
-      const res: AxiosResponse<Array<Driver>> = await api.get<Array<Driver>>(`${this.URL_API}/stats/${this.endpoint}/counters`);
+      const res = await api.get('http://localhost:4000/driverMostWantedMonth');
       return new ReturningService(res.status, res.data);
     } catch (e) {
       return new ReturningService(500, {}, e);

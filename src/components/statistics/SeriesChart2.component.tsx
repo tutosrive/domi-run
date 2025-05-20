@@ -14,9 +14,10 @@ export default function SeriesChart2Component() {
   useEffect(() => {
     // Podrías agregar este array en mock/db.json, o simularlo localmente
     // Por ejemplo, si quieres usar mock:
-    axios.get('http://localhost:4000/deliveriesStats')
-      .then(res => {
-        if(res.status === 200){
+    axios
+      .get('http://localhost:4000/deliveriesStats')
+      .then((res) => {
+        if (res.status === 200) {
           setData(res.data);
         }
       })
@@ -36,10 +37,11 @@ export default function SeriesChart2Component() {
       id: 'series-chart-different',
       type: 'area',
       zoom: { enabled: false },
-      foreColor: '#555',
+      foreColor: 'white',
     },
+    tooltip: { theme: 'dark' },
     xaxis: {
-      categories: data.map(d => d.month),
+      categories: data.map((d) => d.month),
       title: { text: 'Month' },
     },
     yaxis: {
@@ -67,7 +69,7 @@ export default function SeriesChart2Component() {
   const series = [
     {
       name: 'Deliveries',
-      data: data.map(d => d.deliveries),
+      data: data.map((d) => d.deliveries),
     },
   ];
 

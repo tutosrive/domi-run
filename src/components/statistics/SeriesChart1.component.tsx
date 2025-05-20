@@ -14,19 +14,20 @@ export default function SeriesChart1Component() {
   useEffect(() => {
     // Podrías agregar este array en mock/db.json, o simularlo localmente
     // Por ejemplo, si quieres usar mock:
-    axios.get('http://localhost:4000/deliveriesStats2')
-      .then(res => {
-        if(res.status === 200){
+    axios
+      .get('http://localhost:4000/deliveriesStats2')
+      .then((res) => {
+        if (res.status === 200) {
           setData(res.data);
         }
       })
       .catch(() => {
         // fallback: datos estáticos temporales para demo
         setData([
-          { month: 'January', deliveries: 200},
+          { month: 'January', deliveries: 200 },
           { month: 'February', deliveries: 100 },
           { month: 'March', deliveries: 110 },
-          { month: 'April', deliveries: 43},
+          { month: 'April', deliveries: 43 },
         ]);
       });
   }, []);
@@ -36,11 +37,11 @@ export default function SeriesChart1Component() {
       id: 'series-chart-different',
       type: 'area',
       zoom: { enabled: false },
-      foreColor: '#333',
+      foreColor: 'white',
     },
-    colors: [ '#FF6347'],
+    colors: ['#FF6347'],
     xaxis: {
-      categories: data.map(d => d.month),
+      categories: data.map((d) => d.month),
       title: { text: 'Month' },
     },
     yaxis: {
@@ -49,6 +50,7 @@ export default function SeriesChart1Component() {
     stroke: {
       curve: 'smooth',
     },
+    tooltip: { theme: 'dark' },
     dataLabels: { enabled: false },
     fill: {
       type: 'gradient',
@@ -68,13 +70,9 @@ export default function SeriesChart1Component() {
   const series = [
     {
       name: 'Deliveries',
-      data: data.map(d => d.deliveries),
+      data: data.map((d) => d.deliveries),
     },
   ];
 
-  return (
-    <div>
-      <Chart options={options} series={series} type="area" height={320} />
-    </div>
-  );
+  return <Chart options={options} series={series} type="area" height={320} />;
 }

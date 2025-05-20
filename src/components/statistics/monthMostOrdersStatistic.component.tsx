@@ -10,11 +10,6 @@ interface OrderData {
 }
 
 const MonthMostOrdersStatisticComponent: React.FC = () => {
-  // State to hold the chart data
-  // const [dataBars, setDataBars] = useState<{
-  //   series: { name: string; data: number[] }[];
-  //   options: ApexCharts.ApexOptions;
-  // } | null>(null);
   const [dataBars, setDataBars] = useState<{
     series: { name: string; data: number[] }[];
     options: ApexCharts.ApexOptions;
@@ -43,10 +38,6 @@ const MonthMostOrdersStatisticComponent: React.FC = () => {
           chart: {
             redrawOnWindowResize: true,
             redrawOnParentResize: true,
-            events: {
-              mounted: (chart) => chart.windowResizeHandler(),
-            },
-
             type: 'bar',
             background: 'transparent',
             foreColor: '#fff',
